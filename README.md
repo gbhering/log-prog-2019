@@ -1,7 +1,4 @@
-# log-prog-2019
-code for class assignments for programming logic
-
-## Basic implementation
+## basic_implementation.py
 Observe there is no error handling whatsoever, the user is entirely responsible for providing a well formed/formatted formula.
 
 ### Format
