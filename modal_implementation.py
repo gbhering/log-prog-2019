@@ -13,6 +13,14 @@ def solve(f, v):
 	return phi(f, v)
 
 
+# let us define W set of possible worlds
+# let us define R as the set of binary relations
+# between w' and w", members of W
+# let us define F = (W, R) as the graph in which 
+# formulas are evaluated
+
+# let us define M = (F,V)
+
 # order of cases is also order of priority
 def phi(f, v):
 	# base cases
