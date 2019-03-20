@@ -20,11 +20,11 @@ solve("A AND B",v)
 solve("A OR B",v)
 solve("NOT A",v)
 solve("(A OR B) AND (C OR D)",v)
+solve("(A -> B) -> (C -> D)",v)
 ```
 
 ### Operators
-`OR`, `AND`, and `NOT`
-
+In priority order: `NOT`, `AND`, `OR` and `->`
 
 # Useful links
 [Wikipedia's list of logic symbols](https://en.wikipedia.org/wiki/List_of_logic_symbols)
