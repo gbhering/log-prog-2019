@@ -62,5 +62,6 @@ if __name__=='__main__':
 	]
 
 	for test in tests:
-		if solve(test['phi'], V) != test['result']: 
-			print('Test failed '+test['phi'])
+		result = solve(test['phi'], V)
+		if result != test['result']: 
+			print('Test failed: ', test['phi'], 'resulted in', result)
