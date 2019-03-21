@@ -1,9 +1,12 @@
-def findParensMatch(F,i):
+def findParens(phi):
+	i = phi.index('(')
 	s = 0
-	for j,v in enumerate(F[i:]):
-		if v == ')': s-=1
-		if v == '(':s+=1
-		if s == 0: return i+j
+	for j in range(i, len(phi)+1):
+		if phi[j] == ')': s-=1
+		if phi[j] == '(': s+=1
+		if s == 0: return i, j
+	
+	raise SyntaxError('Unmatched parens!', phi)
 
 def solve(F, v):
 	v[True] = True
