@@ -1,30 +1,79 @@
 ## basic_implementation.py
-Observe there is no error handling whatsoever, the user is entirely responsible for providing
- a well formed/formatted formula.
+It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
 
-### Format
-Provide a `str()` with one space between each literal and operator,
- and a `dict()` with `bool()` values for each literal.
-Parens should be balanced, and not empty.
+### Basic usage
+Just use the function `solve(phi, V)`. The output will be `bool`. 
 
-##### Examples
+#### Format
+Provide a the formula as a `str` making sure no variable names will coincide with operator names. Ensure parens are be balanced, and not empty.
+To evaluate the formula, the algorithm needs a `dict` with `bool` values for each literal.
+
+#### Example
 ```python
-v = {
-	'A':True,
-	'B':False,
-	'C':True,
-	'D':False
-}
+V = { 'A': True, 'B': False, 'C': False, 'D': True }
 
-solve("A AND B",v)
-solve("A OR B",v)
-solve("NOT A",v)
-solve("(A OR B) AND (C OR D)",v)
-solve("(A -> B) -> (C -> D)",v)
+solve("A AND B",V) # True
+solve("A OR B",V) # True
+solve("NOT A",V) # False
+solve("(A OR B) AND (C OR D)",V) # True
+solve("(A->B)->(C->D)",V) # True
 ```
 
 ### Operators
-In priority order: `NOT`, `AND`, `OR` and `->`
+Listed in priority order. The parens `(` and `)` can be used to specify order of resolution.
+#### Unary operators 
+`NOT`
+#### Binary operators 
+`AND`, `OR` and `->` 
 
-# Useful links
+
+## modal_implementation.py
+It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
+There's no sanity checking on the model whatsoever.
+
+### Basic usage
+Just use the function `solve( phi, W, R, V, w )`. The output will be `bool`. 
+
+#### Format
+Provide a the formula as a `str` making sure no variable names will coincide with operator names. Ensure parens are be balanced, and not empty.
+The model is expressed by:
+- A `dict` where each literal is associated to a `list` of states where it is true; 
+- a `list` of states and
+- another `dict` with `lists` representing each state and the states they connect to.
+
+#### Example
+Let us use this example model:
+
+![example graph picture](./test_model.png)
+
+Which can be expressed by this code:
+```python
+V = { 
+	'p': [ 's3', 's4', 's5' ], 
+	'q': [ 's1', 's5' ], 
+	'r': [ 's1' ] 
+}
+W = [ 's1', 's2', 's3', 's4', 's5'  ]
+R = { 
+	's1' : [ 's2', 's3' ], 
+	's2' : [ 's5', 's4' ], 
+	's3' : [ 's3', 's4' ], 
+	's4' : [ 's1', 's5' ], 
+	's5' : [ 's5' ] 
+}
+
+solve( "q AND r", W, R, V, "s1" ) # True
+solve( "q OR r", W, R, V, "s3" ) # False
+solve( "SOME p", W, R, V, "s3" ) # True
+solve( "ALL NOT r", W, R, V, "s4" ) # False
+```
+
+### Operators
+Listed in priority order. The parens `(` and `)` can be used to specify order of resolution.
+#### Unary operators 
+`NOT`, `SOME` and `ALL`
+#### Binary operators 
+`AND`, `OR` and `->` 
+
+## Useful links
 [Wikipedia's list of logic symbols](https://en.wikipedia.org/wiki/List_of_logic_symbols)
