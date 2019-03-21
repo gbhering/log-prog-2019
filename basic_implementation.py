@@ -8,9 +8,6 @@ def findParens(phi):
 	raise SyntaxError('Unmatched parens!', phi)
 
 def solve(phi, V):
-	V[True] = True
-	V[False] = False
-
 	phi = phi.replace('(','( ').replace(')', ' )').split()
 	return rec(phi, V)
 
@@ -20,7 +17,7 @@ def rec(phi, V):
 	if len(phi)==0:
 		raise SyntaxError('Malformed expression!', phi)
 	if len(phi)==1:
-		return V[phi[0]]
+		return phi[0] if phi[0] in [True, False] else V[phi[0]]
 	if '(' in phi:
 		i, j = findParens(phi)
 		return rec( phi[:i] + [ rec( phi[i+1:j], V ) ] + phi[j+1:], V )
