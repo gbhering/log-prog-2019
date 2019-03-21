@@ -5,7 +5,6 @@ def findParens(phi):
 		if phi[j] == ')': s-=1
 		if phi[j] == '(': s+=1
 		if s == 0: return i, j
-	
 	raise SyntaxError('Unmatched parens!', phi)
 
 def solve(phi, V):
