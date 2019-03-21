@@ -1,5 +1,5 @@
 ## basic_implementation.py
-It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
+Run with python3! It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
 
 ### Basic usage
 Just use the function `solve(phi, V)`. The output will be `bool`. 
@@ -28,7 +28,7 @@ Listed in priority order. The parens `(` and `)` can be used to specify order of
 
 
 ## modal_implementation.py
-It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
+Run with python3! It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
 There's no sanity checking on the model whatsoever.
 
 ### Basic usage
