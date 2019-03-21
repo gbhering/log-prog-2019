@@ -57,6 +57,8 @@ if __name__=='__main__':
 		{ 'phi': "( B AND A ) -> ( B AND C )", 'result' : True },
 		{ 'phi': "A OR B OR C", 'result' : True },
 		{ 'phi': "A OR B AND B OR C", 'result' : False },
+		{ 'phi': "NOT A OR B", 'result' : False },
+		{ 'phi': "NOT (A OR B)", 'result' : False },
 	]
 
 	for test in tests:
