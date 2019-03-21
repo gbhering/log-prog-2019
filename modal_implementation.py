@@ -1,100 +1,95 @@
-def findParensMatch(f,i):
+def findParensMatch(phi,i):
 	s = 0
-	for j,v in enumerate(f[i:]):
+	for j,v in enumerate(phi[i:]):
 		if v == ')': s-=1
 		if v == '(':s+=1
 		if s == 0: return i+j
 
-def solve(f, v):
-	v[True] = True
-	v[False] = False
+def solve(phi, W, R, V, w):
+	phi = phi.replace('(','( ').replace(')', ' )').split()
+	return sat( phi, W, R, V, w )
 
-	f = f.replace('(','( ').replace(')', ' )').split()
-	return phi(f, v)
-
-
-# let us define W set of possible worlds
-# let us define R as the set of binary relations
-# between w' and w", members of W
-# let us define F = (W, R) as the graph in which 
-# formulas are evaluated
-
-# let us define M = (F,V)
-
-# order of cases is also order of priority
-def phi(f, v):
+def sat( phi, W, R, V, w ):
 	# base cases
-	if len(f)==2 and f[0]=="NOT":
-		return not v[f[1]];
-	if len(f)==3 and f[1] == "AND":
-		return v[f[0]] and v[f[2]]
-	if len(f)==3 and f[1]=="OR":
-		return v[f[0]] or v[f[2]]
-	if len(f)==3 and f[1]=="->":
-		return phi([ 'NOT', v[f[0]], 'OR', v[f[2]] ], v)
-
-	if len(f) > 2 and '(' in f:
-		i = f.index('(')
-		j = findParensMatch(f,i)
-		return phi(f[:i] + [phi(f[i+1:j],v)] + f[j+1:], v)
-
-	if len(f) > 2 and "NOT" in f:
-		i = f.index('NOT')
-		return phi(f[:i] + [phi(f[i:i+2], v)] + f[i+2:], v)
-
-	if len(f) > 3 and "AND" in f:
-		i = f.index('AND')
-		return phi(f[:i-1] + [phi(f[i-1:i+2], v)] + f[i+2:], v)
-
-	if len(f) > 3 and "OR" in f:
-		i = f.index('OR')
-		return phi(f[:i-1] + [phi(f[i-1:i+2], v)] + f[i+2:], v)
-
-	if len(f) > 3 and "->" in f:
-		i = f.index('->')
-		return phi(f[:i-1] + [phi(f[i-1:i+2], v)] + f[i+2:], v)
+	if len(phi)==1:
+		if phi[0] in V.keys():
+			return True if w in V[phi[0]] else False
+		if  phi[0] == '0':
+			return False
+		if  phi[0] == True or phi[0] == False:
+			return phi[0]
+	elif len(phi)==2: 
+		if phi[0] == 'NOT':
+			return not sat( [phi[1]], W, R, V, w )
+		if phi[0] == 'SOME':
+			for _w in R[w]:
+				if sat( phi[1:], W, R, V, _w ): return True
+			return False
+		if phi[0] == 'ALL':
+			for _w in R[w]:
+				if not sat( phi[1:], W, R, V, _w ): return False
+			return True
+	elif len(phi)==3:
+		if phi[1] == 'AND':
+			return sat( [phi[0]], W, R, V, w ) and sat( [phi[2]], W, R, V, w )
+		if phi[1] == 'OR':
+			return sat( [phi[0]], W, R, V, w ) or sat( [phi[2]], W, R, V, w )
+		if phi[1] == '->':
+			return not sat( [phi[0]], W, R, V, w ) or sat( [phi[2]], W, R, V, w )
+	
+	# usual casess, order of cases is priority order as well
+	else:
+		if  '(' in phi:
+			i = phi.index('(')
+			j = findParensMatch(phi,i)
+			return sat(phi[:i] + [sat(phi[i+1:j],v)] + phi[j+1:], v)
+		if  "NOT" in phi:
+			i = phi.index('NOT')
+			return sat(phi[:i] + [sat(phi[i:i+2], v)] + phi[i+2:], v)
+		if "AND" in phi:
+			i = phi.index('AND')
+			return sat(phi[:i-1] + [sat(phi[i-1:i+2], v)] + phi[i+2:], v)
+		if "OR" in phi:
+			i = phi.index('OR')
+			return sat(phi[:i-1] + [sat(phi[i-1:i+2], v)] + phi[i+2:], v)
+		if "->" in phi:
+			i = phi.index('->')
+			return sat(phi[:i-1] + [sat(phi[i-1:i+2], v)] + phi[i+2:], v)
+		if  "SOME" in phi:
+			i = phi.index('SOME')
+			return sat(phi[:i] + [sat(phi[i:i+2], v)] + phi[i+2:], v)
+		if  "ALL" in phi:
+			i = phi.index('ALL')
+			return sat(phi[:i] + [sat(phi[i:i+2], v)] + phi[i+2:], v)
 
 	# things have failed if we get here
-	return f
-
+	return phi
 
 
 if __name__=='__main__':
-	v = { 'A': True, 'B': False, 'C': False }
-	print("v:", v)
+	V = { 
+		'p': [ 's3', 's4', 's5' ], 
+		'q': [ 's1', 's5' ], 
+		'r': [ 's1' ] 
+	}
+	W = [ 's1', 's2', 's3', 's4', 's5'  ]
+	R = { 
+		's1' : [ 's2', 's3' ], 
+		's2' : [ 's5', 's4' ], 
+		's3' : [ 's3', 's4' ], 
+		's4' : [ 's1', 's5' ], 
+		's5' : [ 's5' ] 
+	}
 
-	f = "A AND B"
-	print(f, '=>', solve(f, v))
-
-	f = "A OR B"
-	print(f, '=>', solve(f, v))
-
-	f = "NOT A"
-	print(f, '=>', solve(f, v))
-
-	f = "A OR NOT B OR C"
-	print(f, '=>', solve(f, v))
-
-	f = "NOT A AND NOT B OR NOT C"
-	print(f, '=>', solve(f, v))
-
-	f = "NOT A OR B OR C"
-	print(f, '=>', solve(f, v))
-
-	f = "NOT (A OR B OR C)"
-	print(f, '=>', solve(f, v))
-
-	f = "NOT (A OR B OR C) OR A"
-	print(f, '=>', solve(f, v))
-
-	f = "(A -> C)"
-	print(f, '=>', solve(f, v))
-
-	f = "(C -> A)"
-	print(f, '=>', solve(f, v))
-
-	f = "(A -> A)"
-	print(f, '=>', solve(f, v))
-
-	f = "(B -> C)"
-	print(f, '=>', solve(f, v))
+	phi, w = "p", 's3'
+	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
+	phi, w = "0", 's3'
+	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
+	phi, w = "p AND q", 's3'
+	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
+	phi, w = "p OR q", 's3'
+	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
+	phi, w = "ALL p", 's3'
+	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
+	phi, w = "SOME p", 's3'
+	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
