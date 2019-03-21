@@ -8,12 +8,12 @@ def findParens(phi):
 	
 	raise SyntaxError('Unmatched parens!', phi)
 
-def solve(F, v):
-	v[True] = True
-	v[False] = False
+def solve(phi, V):
+	V[True] = True
+	V[False] = False
 
-	F = F.replace('(','( ').replace(')', ' )').split()
-	return phi(F, v)
+	phi = phi.replace('(','( ').replace(')', ' )').split()
+	return rec(phi, V)
 
 
 # order of cases is also order of priority
