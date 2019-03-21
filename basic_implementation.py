@@ -17,40 +17,28 @@ def solve(phi, V):
 
 
 # order of cases is also order of priority
-def phi(F, v):
-	# base cases
-	if len(F)==2 and F[0]=="NOT":
-		return not v[F[1]];
-	if len(F)==3 and F[1] == "AND":
-		return v[F[0]] and v[F[2]]
-	if len(F)==3 and F[1]=="OR":
-		return v[F[0]] or v[F[2]]
-	if len(F)==3 and F[1]=="->":
-		return phi([ 'NOT', v[F[0]], 'OR', v[F[2]] ], v)
+def rec(phi, V):
+	if len(phi)==0:
+		raise SyntaxError('Malformed expression!', phi)
+	if len(phi)==1:
+		return V[phi[0]]
+	if '(' in phi:
+		i, j = findParens(phi)
+		return rec( phi[:i] + [ rec( phi[i+1:j], V ) ] + phi[j+1:], V )
+	if "AND" in phi:
+		i = phi.index('AND')
+		return rec( phi[:i], V ) and rec( phi[i+1:], V )
+	if "OR" in phi:
+		i = phi.index('OR')
+		return rec( phi[:i], V ) or rec( phi[i+1:], V )
+	if "->" in phi:
+		i = phi.index('->')
+		return not rec( phi[:i], V ) or rec( phi[i+1:], V )
+	if "NOT" == phi[0]:
+		return not rec( phi[1], V )
 
-	if len(F) > 2 and '(' in F:
-		i = F.index('(')
-		j = findParensMatch(F,i)
-		return phi(F[:i] + [phi(F[i+1:j],v)] + F[j+1:], v)
-
-	if len(F) > 2 and "NOT" in F:
-		i = F.index('NOT')
-		return phi(F[:i] + [phi(F[i:i+2], v)] + F[i+2:], v)
-
-	if len(F) > 3 and "AND" in F:
-		i = F.index('AND')
-		return phi(F[:i-1] + [phi(F[i-1:i+2], v)] + F[i+2:], v)
-
-	if len(F) > 3 and "OR" in F:
-		i = F.index('OR')
-		return phi(F[:i-1] + [phi(F[i-1:i+2], v)] + F[i+2:], v)
-
-	if len(F) > 3 and "->" in F:
-		i = F.index('->')
-		return phi(F[:i-1] + [phi(F[i-1:i+2], v)] + F[i+2:], v)
-
-	# things have failed if we get here
-	return F
+	# things haVe failed if we get here
+	return phi
 
 
 
