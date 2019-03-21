@@ -8,7 +8,9 @@ def findParens(phi):
 	raise SyntaxError('Unmatched parens!', phi)
 
 def solve(phi, V):
-	phi = phi.replace('(','( ').replace(')', ' )').split()
+	for operator in ['NOT', 'AND', 'OR', '->', '(', ')']:
+		phi = phi.replace(operator,' '+operator+' ')
+	phi = phi.split()
 	return rec(phi, V)
 
 
