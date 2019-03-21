@@ -43,41 +43,21 @@ def rec(phi, V):
 
 
 if __name__=='__main__':
-	v = { 'A': True, 'B': False, 'C': False }
-	print("v:", v)
+	# for testing purposees
+	V = { 'A': True, 'B': False, 'C': False }
+	tests = [
+		{ 'phi': "A AND B", 'result': False },
+		{ 'phi': "A OR B", 'result' : True },
+		{ 'phi': "NOT A", 'result' : False },
+		{ 'phi': "A -> B", 'result' : False },
+		{ 'phi': "B -> A", 'result' : True },
+		{ 'phi': "( B AND A )", 'result' : False },
+		{ 'phi': "( B AND A ) OR ( B AND C )", 'result' : False },
+		{ 'phi': "( B AND A ) -> ( B AND C )", 'result' : True },
+		{ 'phi': "A OR B OR C", 'result' : True },
+		{ 'phi': "A OR B AND B OR C", 'result' : False },
+	]
 
-	F = "A AND B"
-	print(F, '=>', solve(F, v))
-
-	F = "A OR B"
-	print(F, '=>', solve(F, v))
-
-	F = "NOT A"
-	print(F, '=>', solve(F, v))
-
-	F = "A OR NOT B OR C"
-	print(F, '=>', solve(F, v))
-
-	F = "NOT A AND NOT B OR NOT C"
-	print(F, '=>', solve(F, v))
-
-	F = "NOT A OR B OR C"
-	print(F, '=>', solve(F, v))
-
-	F = "NOT (A OR B OR C)"
-	print(F, '=>', solve(F, v))
-
-	F = "NOT (A OR B OR C) OR A"
-	print(F, '=>', solve(F, v))
-
-	F = "(A -> C)"
-	print(F, '=>', solve(F, v))
-
-	F = "(C -> A)"
-	print(F, '=>', solve(F, v))
-
-	F = "(A -> A)"
-	print(F, '=>', solve(F, v))
-
-	F = "(B -> C)"
-	print(F, '=>', solve(F, v))
+	for test in tests:
+		if solve(test['phi'], V) != test['result']: 
+			print('Test failed '+test['phi'])
