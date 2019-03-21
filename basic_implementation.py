@@ -47,7 +47,7 @@ def rec(phi, V):
 
 if __name__=='__main__':
 	# for testing purposees
-	V = { 'A': True, 'B': False, 'C': False }
+	V = { 'A': True, 'B': False, 'C': False, 'D': True }
 	tests = [
 		{ 'phi': "A AND B", 'result': False },
 		{ 'phi': "A OR B", 'result' : True },
@@ -61,6 +61,8 @@ if __name__=='__main__':
 		{ 'phi': "A OR B AND B OR C", 'result' : False },
 		{ 'phi': "NOT A OR B", 'result' : False },
 		{ 'phi': "NOT (A OR B)", 'result' : False },
+		{ 'phi': "(A->B)->(C->D)", 'result' : True },
+		{ 'phi': "(A OR B) AND (C OR D)", 'result' : True },
 	]
 
 	for test in tests:
