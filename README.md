@@ -76,6 +76,6 @@ Listed in priority order. The parens `(` and `)` can be used to specify order of
 `AND`, `OR` and `->` 
 
 ## Useful links
-[Wikipedia's list of logic symbols](https://en.wikipedia.org/wiki/List_of_logic_symbols)
+[List of logic symbols](https://en.wikipedia.org/wiki/List_of_logic_symbols) on Wikipedia
 
 [Modal Logic Playground](https://rkirsling.github.io/modallogic/) by Ross Kirsling ~~who I stole my idea before I had it~~
