@@ -14,6 +14,9 @@ def solve(phi, V):
 
 # order of cases is also order of priority
 def rec(phi, V):
+	# some checks to prevent funny errors
+	if phi in [True, False]:
+		return phi
 	if len(phi)==0:
 		raise SyntaxError('Malformed expression!', phi)
 	if len(phi)==1:
