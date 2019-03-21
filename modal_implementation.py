@@ -67,15 +67,25 @@ if __name__=='__main__':
 		's5' : [ 's5' ] 
 	}
 
-	phi, w = "p", 's3'
-	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
-	phi, w = "0", 's3'
-	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
-	phi, w = "p AND q", 's3'
-	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
-	phi, w = "p OR q", 's3'
-	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
-	phi, w = "ALL p", 's3'
-	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
-	phi, w = "SOME p", 's3'
-	print("sat(", phi+", M, "+w, ") =>", solve( phi, W, R, V, w ))
+	tests = [
+		{ 'phi': "q AND r", 'w': 's1', 'result': True },
+		{ 'phi': "q AND r", 'w': 's3', 'result': False },
+		{ 'phi': "q OR r", 'w': 's3', 'result': False },
+		{ 'phi': "p OR r", 'w': 's3', 'result': True },
+		{ 'phi': "SOME p", 'w': 's3', 'result': True },
+		{ 'phi': "SOME p", 'w': 's1', 'result': True },
+		{ 'phi': "SOME q", 'w': 's3', 'result': False },
+		{ 'phi': "SOME q", 'w': 's1', 'result': False },
+		{ 'phi': "ALL p", 'w': 's3', 'result': True },
+		{ 'phi': "ALL NOT q", 'w': 's3', 'result': True },
+		{ 'phi': "SOME NOT q", 'w': 's4', 'result': False },
+		{ 'phi': "ALL NOT r", 'w': 's4', 'result': False },
+		{ 'phi': "ALL NOT r OR q", 'w': 's3', 'result': True },
+		{ 'phi': "SOME r AND p", 'w': 's4', 'result': False },
+	]
+
+	for test in tests:
+		result = solve( test['phi'], W, R, V, test['w'] )
+		if result != test['result']: 
+			print('Test failed: ', test['phi'], 'resulted in', result )
+
