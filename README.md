@@ -25,7 +25,9 @@ Listed in priority order. The parens `(` and `)` can be used to specify order of
 `NOT` or `!` or `¬`
 #### Binary operators 
 `AND`, `OR` and `IMPLIES` or
-`&`, `|` and `->` 
+
+`&`, `|` and `->`
+
 `∧`, `∨` and `→`
 
 ## modal_implementation.py
@@ -73,11 +75,15 @@ solve( "NECESSARILY NOT r", W, R, V, "s4" ) # False
 Listed in priority order. The parens `(` and `)` can be used to specify order of resolution.
 #### Unary operators 
 `NOT`, `POSSIBLY` and `NECESSARILY` or
+
 `!`, `<>` and `[]` or
+
 `¬`, `◇` and `□`
 #### Binary operators 
 `AND`, `OR` and `IMPLIES` or
+
 `&`, `|` and `->` 
+
 `∧`, `∨` and `→`
 
 ## Useful links
