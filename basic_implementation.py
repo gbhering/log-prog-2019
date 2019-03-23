@@ -8,7 +8,13 @@ def findParens(phi):
 	raise SyntaxError('Unmatched parens!', phi)
 
 def solve(phi, V):
-	for operator in ['NOT', 'AND', 'OR', '->', '(', ')']:
+	alternates = { 
+		'!':'¬', '&':'∧', '|':'v', '->':'→',
+		'NOT':'¬', 'OR':'v', 'AND':'∧', 'IMPLIES': '→' 
+	}
+	for alt, op in alternates.items():
+		phi = phi.replace(alt, op)
+	for operator in ['¬', '∧', 'v', '→', '(', ')']:
 		phi = phi.replace(operator,' '+operator+' ')
 	phi = phi.split()
 	return rec(phi, V)
@@ -25,19 +31,19 @@ def rec(phi, V):
 		return phi[0] if phi[0] in [True, False] else V[phi[0]]
 
 	# the actual recursion
-	if "NOT" == phi[0]:
+	if "¬" == phi[0]:
 		return not rec( phi[1:], V )
 	if '(' in phi:
 		i, j = findParens(phi)
 		return rec( phi[:i] + [ rec( phi[i+1:j], V ) ] + phi[j+1:], V )
-	if "AND" in phi:
-		i = phi.index('AND')
+	if "∧" in phi:
+		i = phi.index('∧')
 		return rec( phi[:i], V ) and rec( phi[i+1:], V )
-	if "OR" in phi:
-		i = phi.index('OR')
+	if "v" in phi:
+		i = phi.index('v')
 		return rec( phi[:i], V ) or rec( phi[i+1:], V )
-	if "->" in phi:
-		i = phi.index('->')
+	if "→" in phi:
+		i = phi.index('→')
 		return not rec( phi[:i], V ) or rec( phi[i+1:], V )
 
 	# things haVe failed if we get here
@@ -49,20 +55,20 @@ if __name__=='__main__':
 	# for testing purposees
 	V = { 'A': True, 'B': False, 'C': False, 'D': True }
 	tests = [
-		{ 'phi': "A AND B", 'result': False },
-		{ 'phi': "A OR B", 'result' : True },
-		{ 'phi': "NOT A", 'result' : False },
-		{ 'phi': "A -> B", 'result' : False },
-		{ 'phi': "B -> A", 'result' : True },
-		{ 'phi': "( B AND A )", 'result' : False },
-		{ 'phi': "( B AND A ) OR ( B AND C )", 'result' : False },
-		{ 'phi': "( B AND A ) -> ( B AND C )", 'result' : True },
-		{ 'phi': "A OR B OR C", 'result' : True },
-		{ 'phi': "A OR B AND B OR C", 'result' : False },
-		{ 'phi': "NOT A OR B", 'result' : False },
-		{ 'phi': "NOT (A OR B)", 'result' : False },
-		{ 'phi': "(A->B)->(C->D)", 'result' : True },
-		{ 'phi': "(A OR B) AND (C OR D)", 'result' : True },
+		{ 'phi': "A ∧ B", 'result': False },
+		{ 'phi': "A v B", 'result' : True },
+		{ 'phi': "¬ A", 'result' : False },
+		{ 'phi': "A → B", 'result' : False },
+		{ 'phi': "B → A", 'result' : True },
+		{ 'phi': "( B ∧ A )", 'result' : False },
+		{ 'phi': "( B ∧ A ) v ( B ∧ C )", 'result' : False },
+		{ 'phi': "( B ∧ A )→( B ∧ C )", 'result' : True },
+		{ 'phi': "A v B v C", 'result' : True },
+		{ 'phi': "A v B ∧ B v C", 'result' : False },
+		{ 'phi': "¬ A v B", 'result' : False },
+		{ 'phi': "¬ (A v B)", 'result' : False },
+		{ 'phi': "(A→B)→(C→D)", 'result' : True },
+		{ 'phi': "(A v B) ∧ (C v D)", 'result' : True },
 	]
 
 	for test in tests:

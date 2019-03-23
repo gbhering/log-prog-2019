@@ -22,10 +22,11 @@ solve("(A->B)->(C->D)",V) # True
 ### Operators
 Listed in priority order. The parens `(` and `)` can be used to specify order of resolution.
 #### Unary operators 
-`NOT`
+`NOT` or `!` or `¬`
 #### Binary operators 
-`AND`, `OR` and `->` 
-
+`AND`, `OR` and `IMPLIES` or
+`&`, `|` and `->` 
+`∧`, `∨` and `→`
 
 ## modal_implementation.py
 Run with python3! It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
@@ -64,16 +65,20 @@ R = {
 
 solve( "q AND r", W, R, V, "s1" ) # True
 solve( "q OR r", W, R, V, "s3" ) # False
-solve( "SOME p", W, R, V, "s3" ) # True
-solve( "ALL NOT r", W, R, V, "s4" ) # False
+solve( "POSSIBLY p", W, R, V, "s3" ) # True
+solve( "NECESSARILY NOT r", W, R, V, "s4" ) # False
 ```
 
 ### Operators
 Listed in priority order. The parens `(` and `)` can be used to specify order of resolution.
 #### Unary operators 
-`NOT`, `SOME` and `ALL`
+`NOT`, `POSSIBLY` and `NECESSARILY` or
+`!`, `<>` and `[]` or
+`¬`, `◇` and `□`
 #### Binary operators 
-`AND`, `OR` and `->` 
+`AND`, `OR` and `IMPLIES` or
+`&`, `|` and `->` 
+`∧`, `∨` and `→`
 
 ## Useful links
 [List of logic symbols](https://en.wikipedia.org/wiki/List_of_logic_symbols) on Wikipedia
