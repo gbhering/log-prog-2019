@@ -26,7 +26,7 @@ Listed in priority order. The parens `(` and `)` can be used to specify order of
 #### Binary operators 
 `AND`, `OR` and `IMPLIES` or
 
-`&`, `|` and `->`
+`&`, `|` and `->` or
 
 `∧`, `∨` and `→`
 
@@ -82,7 +82,7 @@ Listed in priority order. The parens `(` and `)` can be used to specify order of
 #### Binary operators 
 `AND`, `OR` and `IMPLIES` or
 
-`&`, `|` and `->` 
+`&`, `|` and `->` or
 
 `∧`, `∨` and `→`
 
