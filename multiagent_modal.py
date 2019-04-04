@@ -1,3 +1,5 @@
+import re
+
 def findParens(phi, st='(', end=')'):
 	i = phi.index(st)
 	s = 0
@@ -15,6 +17,7 @@ def solve( phi, W, R, V, w ):
 	}
 	for alt, op in alternates.items():
 		phi = phi.replace(alt, op)
+	phi = re.sub(r'¬([a-zA-Z]+)', r'(¬\1)', phi)
 	for operator in ['¬', '◇', '□', '∧', '∨', '→', '(', ')', '<', '>', '[', ']', ',']:
 		phi = phi.replace(operator,' '+operator+' ')
 	phi = phi.split()
