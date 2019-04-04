@@ -9,12 +9,13 @@ def findParens(phi, st='(', end=')'):
 
 def solve( phi, W, R, V, w ):
 	alternates = { 
-		'!':'¬', '&':'∧', '|':'∨', '->':'→', '[]':'□', '<>':'◇',
-		'NOT':'¬', 'OR':'∨', 'AND':'∧', 'IMPLIES':'→', 'NECESSARILY':'□', 'POSSIBLY':'◇' 
+		'^':'∧', 'v':'∨',
+		'!':'¬', '&':'∧', '|':'∨', '->':'→',
+		'NOT':'¬', 'OR':'∨', 'AND':'∧', 'IMPLIES':'→',
 	}
 	for alt, op in alternates.items():
 		phi = phi.replace(alt, op)
-	for operator in ['¬', '◇', '□', '∧', '∨', '→', '(', ')']:
+	for operator in ['¬', '◇', '□', '∧', '∨', '→', '(', ')', '<', '>', '[', ']', ',']:
 		phi = phi.replace(operator,' '+operator+' ')
 	phi = phi.split()
 	return sat( phi, W, R, V, w )
