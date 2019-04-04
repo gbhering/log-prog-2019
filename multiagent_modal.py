@@ -53,13 +53,13 @@ def sat( phi, W, R, V, w ):
 	
 	if "∧" in phi:
 		i = phi.index('∧')
-		return sat( phi[:i], W, R, V, w) and sat( phi[i+1:], W, R, V, w)
+		return sat( phi[:i], W, R, V, w ) and sat( phi[i+1:], W, R, V, w )
 	if "∨" in phi:
 		i = phi.index('∨')
-		return sat( phi[:i], W, R, V, w) or sat( phi[i+1:], W, R, V, w)
+		return sat( phi[:i], W, R, V, w ) or sat( phi[i+1:], W, R, V, w )
 	if "→" in phi:
 		i = phi.index('→')
-		return not sat( phi[:i], W, R, V, w) or sat( phi[i+1:], W, R, V, w)
+		return not sat( phi[:i], W, R, V, w ) or sat( phi[i+1:], W, R, V, w )
 
 	# things have failed if we get here
 	raise RuntimeError('Either your expression is malformed or you found a bug!', phi)
