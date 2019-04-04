@@ -20,6 +20,22 @@ def solve( phi, W, R, V, w ):
 	phi = phi.split()
 	return sat( phi, W, R, V, w )
 
+def satDiamond( phi, W, R, V, w ):
+	i = phi.index('>')
+	agents = phi[1:i:2] if phi[1] != '*' else R.keys()
+	for _ag in agents:
+		for _w in R[_ag][w]:
+			if sat( phi[i+1:], W, R, V, _w ): return True
+	return False
+
+def satSquare( phi, W, R, V, w ):
+	i = phi.index(']')
+	agents = phi[1:i:2] if phi[1] != '*' else R.keys()
+	for _ag in agents:
+		for _w in R[_ag][w]:
+			if not sat( phi[i+1:], W, R, V, _w ): return False
+	return True
+
 def sat( phi, W, R, V, w ):
 	if phi in [True, False]:
 		return phi
