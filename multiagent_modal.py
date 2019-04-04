@@ -101,7 +101,7 @@ if __name__=='__main__':
 		{ 'phi': "[]p ∨ r", 'w': 's2', 'result': True },
 		{ 'phi': "<*>q ∨ r", 'w': 's2', 'result': True },
 		{ 'phi': "[ana]p ∨ r", 'w': 's1', 'result': False },
-		{ 'phi': "<*>¬p", 'w': 's2', 'result': False },
+		{ 'phi': "<ana,bea>¬p", 'w': 's2', 'result': False },
 		{ 'phi': "[bea]¬p", 'w': 's2', 'result': True },
 		{ 'phi': "[bea]¬p", 'w': 's2', 'result': True },
 		{ 'phi': "[ana](¬p) v p", 'w': 's2', 'result': True },
