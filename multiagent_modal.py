@@ -98,8 +98,11 @@ if __name__=='__main__':
 		{ 'phi': "◇ r ∧ p", 'w': 's4', 'result': False },
 	]
 
+	failed = False
 	for test in tests:
 		result = solve( test['phi'], W, R, V, test['w'] )
 		if result != test['result']: 
+			failed = True
 			print('Test failed: ', test['phi'], 'resulted in', result )
 
+	if not failed: print('All tests passed!')
