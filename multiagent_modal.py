@@ -62,7 +62,7 @@ def sat( phi, W, R, V, w ):
 		return not sat( phi[:i], W, R, V, w) or sat( phi[i+1:], W, R, V, w)
 
 	# things have failed if we get here
-	return phi
+	raise RuntimeError('Either your expression is malformed or you found a bug!', phi)
 
 
 if __name__=='__main__':
