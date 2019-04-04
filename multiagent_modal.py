@@ -74,11 +74,20 @@ if __name__=='__main__':
 	}
 	W = [ 's1', 's2', 's3', 's4', 's5'  ]
 	R = { 
-		's1' : [ 's2', 's3' ], 
-		's2' : [ 's5', 's4' ], 
-		's3' : [ 's3', 's4' ], 
-		's4' : [ 's1', 's5' ], 
-		's5' : [ 's5' ] 
+		'ana' : {
+			's1' : [ 's2', 's3' ], 
+			's2' : [ 's5', 's4' ], 
+			's3' : [ 's3', 's4' ], 
+			's4' : [ 's1', 's5' ], 
+			's5' : [ 's5' ],
+		},
+		'bea' : {
+			's1' : [ ], 
+			's2' : [ ], 
+			's3' : [ ], 
+			's4' : [ ], 
+			's5' : [ ],
+		},
 	}
 
 	tests = [
@@ -86,16 +95,14 @@ if __name__=='__main__':
 		{ 'phi': "q ∧ r", 'w': 's3', 'result': False },
 		{ 'phi': "q ∨ r", 'w': 's3', 'result': False },
 		{ 'phi': "p ∨ r", 'w': 's3', 'result': True },
-		{ 'phi': "◇ p", 'w': 's3', 'result': True },
-		{ 'phi': "◇ p", 'w': 's1', 'result': True },
-		{ 'phi': "◇ q", 'w': 's3', 'result': False },
-		{ 'phi': "◇ q", 'w': 's1', 'result': False },
-		{ 'phi': "□ p", 'w': 's3', 'result': True },
-		{ 'phi': "□ ¬q", 'w': 's3', 'result': True },
-		{ 'phi': "◇ ¬q", 'w': 's4', 'result': False },
-		{ 'phi': "□ ¬r", 'w': 's4', 'result': False },
-		{ 'phi': "□ ¬r ∨ q", 'w': 's3', 'result': True },
-		{ 'phi': "◇ r ∧ p", 'w': 's4', 'result': False },
+		{ 'phi': "[]p ∨ r", 'w': 's2', 'result': True },
+		{ 'phi': "<*>q ∨ r", 'w': 's2', 'result': True },
+		{ 'phi': "[ana]p ∨ r", 'w': 's1', 'result': False },
+		{ 'phi': "<*>¬p", 'w': 's2', 'result': False },
+		{ 'phi': "[bea]¬p", 'w': 's2', 'result': True },
+		{ 'phi': "[bea]¬p", 'w': 's2', 'result': True },
+		{ 'phi': "[ana](¬p) v p", 'w': 's2', 'result': True },
+		{ 'phi': "[ana](¬p v p)", 'w': 's2', 'result': True },
 	]
 
 	failed = False
