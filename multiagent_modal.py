@@ -7,7 +7,7 @@ def findParens(phi, st='(', end=')'):
 		if s == 0: return i, j
 	raise SyntaxError('Unmatched parens!', st, end, phi)
 
-def solve(phi, W, R, V, w):
+def solve( phi, W, R, V, w ):
 	alternates = { 
 		'!':'¬', '&':'∧', '|':'∨', '->':'→', '[]':'□', '<>':'◇',
 		'NOT':'¬', 'OR':'∨', 'AND':'∧', 'IMPLIES':'→', 'NECESSARILY':'□', 'POSSIBLY':'◇' 
