@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+
+%Gummi|065|=)
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{cancel}
+\usepackage[portuguese]{babel}
+
+%silly things to make my life easier
+\newcommand{\sq}{\square}
+\newcommand{\di}{\lozenge}
+\newcommand{\imp}{\rightarrow}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\mwm}{\mathcal{M}, w \; \models \;}
+\newcommand{\mwn}{\mathcal{M}, w \; \cancel{\models} \;}
+
+\title{\textbf{Lista sobre Lógica Modal}}
+\author{Gabriel Bhering Dominoni}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\section{Mostre que as seguintes fórmulas são válidas ou não na classe $\F$ de todos os frames}
+
+
+
+
+
+\subsection{$ \F\models \sq ( \phi \land \psi ) \imp ( \sq \phi \land \sq \psi ) $}
+
+Suponha, por contradição, $\M = (\F, V)$, com um $w \in W$ tal que
+\begin{equation}
+\mwn \sq ( \phi \land \psi ) \imp ( \sq \phi \land \sq \psi )
+\end{equation}
+
+Facilmente se separa a equação em:
+\begin{flalign} 
+\mwm & \sq ( \phi \land \psi ) \label{1.1} \\
+\mwn & \sq \psi \label{1.2} \\
+\mwn & \sq \phi \label{1.3}
+\end{flalign}
+
+E imediatamente se cai em contradição, pois \ref{1.1} não pode ser verdade se \ref{1.2} ou \ref{1.3} não são, uma vez que (2) só é verdade se todos os vizinhos de $w$ contém $\phi$ e $\psi$, mas \ref{1.2} e \ref{1.4} só podem ser verdade se nem todo vizinho de $w$ contém respectivamente $\phi$ e $\psi$.
+
+
+
+
+\subsection{$ \F\models ( \sq \phi \land \sq \psi ) \imp \sq ( \phi \land \psi ) $}
+
+Suponha, por contradição, $\M = (\F, V)$, com um $w \in W$ tal que
+\begin{equation}
+\mwn \sq ( \phi \land \psi ) \imp ( \sq \phi \land \sq \psi )
+\end{equation}
+
+Facilmente se separa a equação em:
+\begin{flalign} 
+\mwm & \sq \psi \label{2.2} \\
+\mwm & \sq \phi \label{2.3} \\
+\mwn & \sq ( \phi \land \psi ) \label{2.1} 
+\end{flalign}
+
+E imediatamente se cai em contradição, pois \ref{2.1} não pode ser verdade se \ref{2.2} ou \ref{2.3} não são, uma vez que (2) só é verdade se todos os vizinhos de $w$ contém $\phi$ e $\psi$, mas \ref{2.2} e \ref{2.3} só podem ser verdade se nem todo vizinho de $w$ contém respectivamente $\phi$ e $\psi$.
+
+
+
+
+\subsection{$ \F\models \di ( \phi \land \psi ) \imp ( \di \phi \land \di \psi ) $}
+\subsection{$ \F\models ( \di \phi \land \di \psi ) \imp \di ( \phi \land \psi ) $}
+\subsection{$ \F\models \sq ( \phi \lor \psi ) \imp ( \sq \phi \lor \sq \psi ) $}
+\subsection{$ \F\models ( \sq \phi \lor \sq \psi ) \imp \sq ( \phi \lor \psi ) $}
+\subsection{$ \F\models \di ( \phi \lor \psi ) \imp ( \di \phi \lor \di \psi ) $}
+\subsection{$ \F\models ( \di \phi \lor \di \psi ) \imp \di ( \phi \lor \psi ) $}
+\subsection{$ \F\models \sq ( \phi \imp \psi ) \imp ( \sq \phi \imp \sq \psi ) $}
+\subsection{$ \F\models ( \sq \phi \imp \sq \psi ) \imp \sq ( \phi \imp \psi ) $}
+\subsection{$ \F\models \di ( \phi \imp \psi ) \imp ( \di \phi \imp \di \psi ) $}
+\subsection{$ \F\models ( \di \phi \imp \di \psi ) \imp \di ( \phi \imp \psi ) $}
+\subsection{$ \F\models \di \phi \imp \lnot \sq \lnot \phi $}
+\subsection{$ \F\models \sq \phi \imp \lnot \di \lnot \phi $}
+
+
+
+\end{document}
