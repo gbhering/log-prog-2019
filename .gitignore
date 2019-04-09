@@ -106,5 +106,6 @@ venv.bak/
 # my test file
 solve.py
 
-# tex output files
+# tex temp/output files
 lists/*.pdf
+*.swp
