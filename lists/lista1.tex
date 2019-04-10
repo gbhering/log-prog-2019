@@ -97,7 +97,7 @@ Prova:
 \end{tikzpicture}
 \end{figure}
 
-$\M_{1.4} = ( \{w_1, w_2, w_3\}, \; w_1Rw_2, \; w_1Rw_2, \; V(\phi) = \{w_2\}, \; V(\psi) = \{w_3\}) $ 
+$\M_{1.4} = ( \{w_1, w_2, w_3\}, \; w_1R_{1.4}w_2, \; w_1R_{1.4}w_2, \; V_{1.4}(\phi) = \{w_2\}, \; V_{1.4}(\psi) = \{w_3\}) $ 
 
 
 
@@ -111,8 +111,8 @@ Prova: mesmo modelo $\M_{1.4}$ acima.
 
 
 % 1.6
-\subsection{$ \F\models ( \sq \phi \lor \sq \psi ) \imp \sq ( \phi \lor \psi ) $}
-Intuição: Se todos vizinhos tem $\phi$, todos tem $\phi$ ou $\psi$; ou se todos vizinhos tem $\psi$, então todos tem $\phi$ ou $\psi$ \\
+\subsection{$ \F\models ( \sq \phi \lor \sq \psi ) \imp \sq ( \phi \lor \psi ) | válida$}
+Intuição: Se todos vizinhos tem $\phi$, todos tem $\phi$ ou $\psi$; ou se todos vizinhos tem $\psi$, então todos tem $\phi$ ou $\psi$. Se acreditamos em $\phi$, ou se acreditamos em $\psi$, acreditamos em $\phi$ ou $\psi$ \\
 
 \spcmw
 \begin{flalign} 
@@ -126,8 +126,8 @@ Contradição por (\ref{1.6.1}) e (\ref{1.6.2}): (\ref{1.6.2}) é válida sse ne
 
 
 % 1.7
-\subsection{$ \F\models \di ( \phi \lor \psi ) \imp ( \di \phi \lor \di \psi ) $}
-Intuição: Se algum vizinho tem $\phi$ ou tem $\psi$, então pelo menos ele tem $\phi$, ou pelo menos ele tem $\psi$ \\
+\subsection{$ \F\models \di ( \phi \lor \psi ) \imp ( \di \phi \lor \di \psi ) | válida $}
+Intuição: Se algum vizinho tem $\phi$ ou tem $\psi$, então pelo menos ele tem $\phi$, ou pelo menos ele tem $\psi$. Se acreditamos em $\phi$ ou $\psi$, é porque acreditamos em $\phi$ ou acreditamos em $\psi$ (ou nos dois). \\
 
 \spcmw
 \begin{flalign} 
@@ -142,39 +142,128 @@ Contradição por (\ref{1.7.1}), (\ref{1.7.2})  e (\ref{1.7.3}): Por (\ref{1.7.1
 
 
 % 1.8
-\subsection{$ \F\models ( \di \phi \lor \di \psi ) \imp \di ( \phi \lor \psi ) $}
-Intuição: Dado que ou algum vizinho tem $\phi$ ou algum vizinho tem $\psi$, esse(s) vizinho(s) tem $\phi$ ou tem $\psi$.
+\subsection{$ \F\models ( \di \phi \lor \di \psi ) \imp \di ( \phi \lor \psi ) | válida $}
+Intuição: Dado que ou algum vizinho tem $\phi$ ou algum vizinho tem $\psi$, esse(s) vizinho(s) tem $\phi$ ou tem $\psi$. Dado que acreditamos em um ou outro, acreditamos em algum dos dois. \\
+
+\spcmw
+\begin{flalign}
+\mwn & ( \di \phi \lor \di \psi ) \imp \di ( \phi \lor \psi ) \\
+\mwm & \di \phi \lor \di \psi \label{1.8.1} \\
+\mwn & \di ( \phi \lor \psi ) \label{1.8.2}
+\end{flalign}
+
+Contradição por (\ref{1.8.1}) e (\ref{1.8.2}): 
+(\ref{1.8.2}) é válida sse todo vizinho de $w$ não tem $\phi$ nem $\psi$, porém por (\ref{1.8.1}) temos que ou algum vizinho tem $\psi$ ou algum vizinho tem $\phi$.
 
 
 
 
-\subsection{$ \F\models \sq ( \phi \imp \psi ) \imp ( \sq \phi \imp \sq \psi ) $}
+% 1.9
+\subsection{$ \F\models \sq ( \phi \imp \psi ) \imp ( \sq \phi \imp \sq \psi )$ | válida}
+Intuição: Se todos os vizinhos que tem $\phi$ tem $\psi$, quer dizer que se todos os vizinhos tem $\phi$, todos os vizinhos tem $\psi$. Se acreditamos que $\phi$ implica em $\psi$, então acreditar em $\phi$ implica em acreditar em $\psi$. \\
+
+\spcmw
+\begin{flalign}
+\mwn & \sq ( \phi \imp \psi ) \imp ( \sq \phi \imp \sq \psi ) \\
+\mwm & \sq (\phi \imp \psi) \label{1.9.1}\\
+\mwn & \sq \phi \imp \sq \psi \label{1.9.2}\\
+\mwm & \sq \phi \label{1.9.3}\\
+\mwn & \sq \psi \label{1.9.4}
+\end{flalign}
+
+Contradição por (\ref{1.9.1}), (\ref{1.9.3}) e (\ref{1.9.4}): 
+(\ref{1.9.3}) e (\ref{1.9.4}) nos dão que todos os vizinhos de $w$ tem $\phi$ e nem todos tem $\psi$, o que diretamente invalída (\ref{1.9.1}), que só é verdade se todos os vizinhos que tem $\phi$ tem $\psi$.
 
 
 
+%1.10
+\subsection{$ \F\models ( \sq \phi \imp \sq \psi ) \imp \sq ( \phi \imp \psi )$ | válida}
+Intuição: Se todos quando todos os vizinhos tem $\phi$ todos os vizinhos tem $\psi$, então naturalmente todos os vizinhos que tem $\phi$ também tem $\psi$. Se quando acreditamos que $\phi$ acreditamos em $\psi$, então acreditamos que $\phi$ implica em $\psi$. \\
 
-\subsection{$ \F\models ( \sq \phi \imp \sq \psi ) \imp \sq ( \phi \imp \psi ) $}
+\spcmw
+\begin{flalign}
+\mwn & ( \sq \phi \imp \sq \psi ) \imp \sq ( \phi \imp \psi ) \\
+\mwm & \sq \phi \imp \sq \psi \label{1.10.1}\\
+\mwn & \sq (\phi \imp \psi) \label{1.10.2}\\
+\mwm & \lnot \sq \phi \lor \sq \psi \label{1.10.3}\\
+\mwn & \lnot (\lnot \sq \phi \lor \sq \psi) \label{1.10.4}\\
+\mwn & \sq \phi \label{1.10.5}\\
+\mwm & \sq \psi \label{1.10.6}
+\end{flalign}
+
+Contradição por (\ref{1.10.2}) e (\ref{1.10.6}): Por (\ref{1.10.6}) todos os vizinhos de $w$ tem $\psi$, automáticamente $\sq (\phi \imp \psi)$ é sempre verdade, o que invalída (\ref{1.10.2}).
+
+
+%1.11
+\subsection{$ \F\models \di ( \phi \imp \psi ) \imp ( \di \phi \imp \di \psi ) $ | inválida}
+Intuição: Como é possível verificar a primeira parte da implicação se um $w$ tem um vizinho sem $\phi$ ou $\psi$, e basta que exista um vizinho com $\phi$ mas nenhum vizinho com $\psi$ para falsificar a segunda parte, essa expressão é falsificável! Ou seja, acreditar que $\phi$ implica em $\psi$ não é o mesmo que acreditar em $\phi$ implica em acreditar em $\psi$. \\
+
+Prova: 
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=2pt,auto,node distance=2cm, semithick]
+  \tikzstyle{every state}=[fill=white,text=black]
+
+  \node[state] 		   (A)                   {$w_1$};
+  \node[state]         (B) [left of=A]       {$w_2$};
+  \node[state]         (C) [right of=A]      {$w_3$};
+  \node	(VB)          [left of=B,xshift=12mm]      {$\phi$};
+
+  \path (A) edge              node {} (B)
+            edge              node {} (C);
+\end{tikzpicture}
+\end{figure}
+
+$\M_{1.11} = ( \{w_1, w_2, w_3\}, \; w_1R_{1.11}w_2, \; w_1R_{1.11}w_2, \; V_{1.11}(\phi) = \{w_2\} )$ 
 
 
 
-
-\subsection{$ \F\models \di ( \phi \imp \psi ) \imp ( \di \phi \imp \di \psi ) $}
-
-
-
-
+%1.12
 \subsection{$ \F\models ( \di \phi \imp \di \psi ) \imp \di ( \phi \imp \psi ) $}
+Intuição: Se quando há um vizinho de $w$ com $\phi$. há um vizinho com $\psi$, então pelo menos neste vizinho $\phi$ implica em $\psi$. Se acreditar em $\phi$ é acreditar em $\psi$, então acreditamos que $\phi$ implica em $\psi$. \\
 
+\spcmw
+\begin{flalign}
+\mwn & ( \di \phi \imp \di \psi ) \imp \di ( \phi \imp \psi ) \\
+\mwm & \di \phi \imp \di \psi \\
+\mwn & \lnot ( \lnot \di \phi \lor \di \psi )\\
+\mwn & \di \phi\\
+\mwm & \di \psi \label{1.12.1}\\
+\mwn & \di ( \phi \imp \psi ) \label{1.12.2} 
+\end{flalign}
 
+Contradição por (\ref{1.12.1}) e (\ref{1.12.2}): Por (\ref{1.12.1}) existe um vizinho com $\psi$, o que automaticamente verifica $\di ( \phi \imp \psi )$, invalidando (\ref{1.12.2}).
 
-
+%1.13
 \subsection{$ \F\models \di \phi \imp \lnot \sq \lnot \phi $}
+Intuição: Se há algum vizinho com $\phi$, naturalmente nem todo vizinho não tem $\phi$. Se acreditamos em $\phi$, não sabemos que não $\phi$.\\
 
 
+\spcmw
+\begin{flalign}
+\mwn & \di \phi \imp \lnot \sq \lnot \phi \\
+\mwm & \di \phi \\
+\exists_{w' \in W,\, wRw'} & \; w' \in V(\phi) \\
+\mwm & \sq \lnot \phi \\
+\forall_{w' \in W,\, wRw'} & \; w' \notin V(\phi) \\
+\lnot\exists_{w' \in W,\, wRw'} & \; w' \in V(\phi)
+\end{flalign}
 
+Contradição direta entre (41) e (44).
 
+%1.14
 \subsection{$ \F\models \sq \phi \imp \lnot \di \lnot \phi $}
+Intuição: Se todos os vizinhos tem $\phi$, naturalmente não existe um vizinho sem $\phi$. Se sabemos $\phi$ não podemos acreditar que não $\phi$\\
 
+\spcmw
+\begin{flalign}
+\mwn & \sq \phi \imp \lnot \di \lnot \phi \\
+\mwm & \sq \phi \\
+\forall_{w' \in W,\, wRw'} & \; w' \in V(\phi) \\
+\mwm & \di \lnot \phi \\
+\exists_{w' \in W,\, wRw'} & \; w' \notin V(\phi) \\
+\lnot\forall_{w' \in W,\, wRw'} & \; w' \in V(\phi)
+\end{flalign}
 
-
+Contradição direta entre (47) e (50).
 \end{document}
