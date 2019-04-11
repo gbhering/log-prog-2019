@@ -17,6 +17,8 @@
 \newcommand{\mwm}{\mathcal{M}, w \models \;}
 \newcommand{\mwn}{\mathcal{M}, w \not \models \;}
 \newcommand{\spcmw}{Prova: suponha, por contradição, $\M = (\F, V)$, com um $w \in W$ tal que}
+\newcommand{\fen}{\forall_{w'\in W,\,wRw'}}
+\newcommand{\en}{\exists_{w'\in W,\,wRw'}}
 
 \title{\textbf{Lista sobre Lógica Modal}}
 \author{Gabriel Bhering Dominoni}
@@ -41,8 +43,15 @@ Intuição: Se todos vizinhos tem $\phi$ e $\psi$, todos vizinhos tem $\phi$ e t
 \mwn & \sq \phi \land \sq \psi \label{1.1.2}
 \end{flalign}
 
-Contradição, por (\ref{1.1.1}) e (\ref{1.1.2}): (\ref{1.1.1}) é válido sse todo vizinho de $w$ tem tanto $\phi$ quanto $\psi$, mas (\ref{1.1.2}) só é válido se nem todo vizinho tem $\phi$ ou se nem todo vizinho tem $\psi$.
+Contradição, por (\ref{1.1.1}) e (\ref{1.1.2}): (\ref{1.1.1}) é válido sse todo vizinho de $w$ tem tanto $\phi$ quanto $\psi$, mas (\ref{1.1.2}) só é válido se nem todo vizinho tem $\phi$ ou se nem todo vizinho tem $\psi$. \\
 
+Formalmente: (\ref{1.1.1}) é válido sse \[\fen (w'\in V(\phi) \land w' \in V(\psi))\] 
+
+que é equivalente a \[\fen w'\in V(\phi) \land \fen w' \in V(\psi)\] 
+
+(\ref{1.1.2}) é válido sse \[\lnot \left(\fen w' \in V(\phi) \land \fen w' \in V(\psi)\right)\] 
+
+Caindo em contradição evidente
 
 
 % 1.2
@@ -57,8 +66,9 @@ Intuição: Se todos vizinhos tem $\phi$ e todos vizinhos tem $\psi$, todos vizi
 \mwn & \sq ( \phi \land \psi ) \label{1.2.3} 
 \end{flalign}
 
-Contradição, por (\ref{1.2.1}), (\ref{1.2.2}) e (\ref{1.2.3}): (\ref{1.2.3}) é válido sse nem todos os vizinhos de $w$ tem tanto $\phi$ quanto $\psi$, porém por \ref{1.2.2} e \ref{1.2.3} temos que todos os vizinhos de $w$ tem, respectivamente, $\phi$ e $\psi$.
+Contradição, por (\ref{1.2.1}), (\ref{1.2.2}) e (\ref{1.2.3}): (\ref{1.2.3}) é válido sse nem todos os vizinhos de $w$ tem tanto $\phi$ quanto $\psi$, porém por \ref{1.2.2} e \ref{1.2.3} temos que todos os vizinhos de $w$ tem, respectivamente, $\phi$ e $\psi$. \\
 
+Formalmente: (\ref{1.2.1}) e (\ref{1.2.2}) são válidas sse \[\fen\]
 
 
 % 1.3
@@ -232,7 +242,9 @@ Intuição: Se quando há um vizinho de $w$ com $\phi$. há um vizinho com $\psi
 \mwn & \di ( \phi \imp \psi ) \label{1.12.2} 
 \end{flalign}
 
-Contradição por (\ref{1.12.1}) e (\ref{1.12.2}): Por (\ref{1.12.1}) existe um vizinho com $\psi$, o que automaticamente verifica $\di ( \phi \imp \psi )$, invalidando (\ref{1.12.2}).
+Contradição por (\ref{1.12.1}) e (\ref{1.12.2}): Por (\ref{1.12.1}) existe um vizinho com $\psi$, o que automaticamente verifica $\di ( \phi \imp \psi )$, invalidando (\ref{1.12.2}). \\
+
+Formalmente: 
 
 %1.13
 \subsection{$ \F\models \di \phi \imp \lnot \sq \lnot \phi $}
@@ -266,4 +278,115 @@ Intuição: Se todos os vizinhos tem $\phi$, naturalmente não existe um vizinho
 \end{flalign}
 
 Contradição direta entre (47) e (50).
+
+
+% 2
+\section{Mostre que os seguintes modelos enraizados são ou não bissimilares}
+
+% 2.1
+\subsection{$M_w = \langle \{w\}, wR_1w, V_1(p) = \{w\} \rangle$ e\\ 
+$N_v = \langle \{v,v'\},vR_2v', v'R_2v, V_2(p) = \{v,v'\} \rangle$}
+
+
+\textbf{São bissibilires}, já que para todas as transições, de todos os estados, dos dois lados, todas as origens e destinos possíveis, se vai de um estado equivalente ao outro.
+
+
+
+
+% 2.2
+\subsection{$M_w = \langle \{w\}, wR_1w, V_1(p) = \{w\} \rangle$ e\\ 
+$N_v = \langle \{v,v'\},vR_2v', V_2(p) = \{v,v'\} \rangle$}
+
+\textbf{Não bissimilares}. Pelo teorema da bissimulação, se $\forall_{w \in W_1} M, w \models \di p$, então supostamente $\forall_{v \in W_2} N, v \models \di p$, mas não é o caso para $v'$.
+
+
+
+% 2.3
+\subsection{$M_w = \langle \{w, w'\}, wR_1w', V_1(p) = \{w,w'\} \rangle$ e\\ 
+$N_v = \langle \{v,v',v''\},vR_2v', vR_2v'', V_2(p) = \{v,v',v''\} \rangle$}
+
+
+\textbf{Não bissimilares}. É trivial visualizar que $w'$ deveria ser perfeitamente equivalente a $v'$, mas não é uma vez que $\di p$ não é verdade no primeiro, mas é no segundo.
+
+
+% 3
+\section{Tradução padrão para as seguintes fórmulas}
+
+% 3.1
+\subsection{$ \sq p \imp p $}
+
+\[ \forall_y ( xRy \imp p ) \imp p \]
+
+% 3.2
+\subsection{$ p \imp \di p $, qual é a relação com a fórmula anterior?}
+
+\[p \imp \exists_y ( xRy \land p ) \]
+\[\lnot p \lor \exists_y ( xRy \land p ) \]
+
+Como a fórmula acima pode ser reescrita como:
+
+\[ \lnot \forall_y ( xRy \imp p ) \lor p \]
+\[ \lnot \forall_y ( \lnot xRy \imp p ) \lor p \]
+\[ \exists_y (xRy \land \lnot p ) \lor p \]
+
+Ela pode ser traduzida de volta para modal como quase um espelho:
+
+\[\lnot p \imp \di \lnot p \]
+
+
+% 3.3
+\subsection{$ \sq p \imp \sq\sq p $}
+
+\[ \forall_y ( xRy \imp p ) \imp \forall_y ( xRy \imp \forall_z ( xRz \imp p ) ) \]
+
+% 3.4
+\subsection{$ \di\di p \imp \di p $, qual é a relação com a fórmula anterior?}
+
+\[ \exists_y ( xRy \land \exists_z ( xRz \land p ) ) \imp \exists_y ( xRy \land p ) \]
+\[ \lnot \exists_y ( xRy \land \exists_z ( xRz \land p ) ) \lor \exists_y ( xRy \land p ) \]
+\[ \forall_y \lnot ( xRy \land \exists_z ( xRz \land p ) ) \lor \exists_y ( xRy \land p ) \]
+\[ \forall_y ( \lnot xRy \lor \lnot \exists_z ( xRz \land p ) ) \lor \exists_y ( xRy \land p ) \]
+
+???
+
+% 3.5
+\subsection{$ p \imp \sq\di p $}
+
+\[p \imp \forall_y(xRy \imp \exists_z( yRz \land p))\]
+
+% 3.6
+\subsection{$ \di p \imp \sq\di p $}
+
+\[\exists_y(xRy \land p) \imp \forall_y(xRy \imp \exists_z( yRz \land p))\]
+
+% 3.7
+\subsection{$ \sq( p \land \di(q \imp \di \lnot p) )$}
+\[ \forall_y(xRy \imp ( p \imp \exists_z (yRz \land ( q \imp \exists_w ( zRw \land \lnot p ) ) ) ) ) \]
+
+
+
+% 4
+\section{Prove}
+
+% 4.1
+\subsection{$\F_{Euclidiano} \equiv \forall_{x,y,z \in W} ( xRy \land xRz \imp yRz ): \; 
+\F_E \models \di p \imp \sq\di p
+$}
+
+Intuição: se há um caminho direto até $p$ (ou seja $\di p$), e como frames euclidianos são grafos completos, todos os vizinhos também conseguem chegar até esse $p$.
+
+% 4.2
+\subsection{$ \F_{Serial} \equiv \forall_x\exists_y xRy: 
+\F_{Sl} \models \sq p \imp \di p
+$}
+
+Intuição: Geralmente só seria possível falsificar esta expressão em um terminal, isto é, um $w$ sem vizinhos, onde $\sq p$ seria verdadeiro e $\di p$ não. Porém, na classe serial, todo nó tem pelo menos um vizinho, então naturalmente a expressão é uma tautologia.
+
+% 4.3
+\subsection{combinações}
+\emph{Falta informação.}
+
+
 \end{document}
+
+
