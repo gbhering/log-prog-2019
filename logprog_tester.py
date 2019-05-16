@@ -1,6 +1,21 @@
 from logprog_basic import solve as basic_solve
 from logprog_modal import solve as modal_solve
 from logprog_multiagent import solve as multiagent_solve
+from logprog_announcements import solve as announcements_solve
+
+def test_announcements():
+	tests = []
+
+	failed = False
+	for test in tests:
+		result = announcements_solve( test['phi'], W, R, V, test['w'] )
+		if result != test['result']: 
+			failed = True
+			print('Test failed: ', test['phi'], 'resulted in', result )
+
+	if not failed: print('All announcement tests passed!')
+
+
 
 def test_multiagent():
 	V = { 
@@ -123,3 +138,4 @@ if __name__=='__main__':
 	test_basic()
 	test_modal()
 	test_multiagent()
+	test_announcements()
