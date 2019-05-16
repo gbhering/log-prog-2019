@@ -1,16 +1,6 @@
-from logprog_util import findParens
+from logprog_util import findParens, preparse
 
-def solve(phi, W, R, V, w):
-	alternates = { 
-		'!':'¬', '&':'∧', '|':'∨', '->':'→', '[]':'□', '<>':'◇',
-		'NOT':'¬', 'OR':'∨', 'AND':'∧', 'IMPLIES':'→', 'NECESSARILY':'□', 'POSSIBLY':'◇' 
-	}
-	for alt, op in alternates.items():
-		phi = phi.replace(alt, op)
-	for operator in ['¬', '◇', '□', '∧', '∨', '→', '(', ')']:
-		phi = phi.replace(operator,' '+operator+' ')
-	phi = phi.split()
-	return sat( phi, W, R, V, w )
+def solve( phi, W, R, V, w ): return sat( preparse(phi), W, R, V, w )
 
 def sat( phi, W, R, V, w ):
 	if phi in [True, False]:

@@ -46,19 +46,23 @@ def test_multiagent():
 		{ 'phi': "q ∧ r", 'w': 's3', 'result': False },
 		{ 'phi': "q ∨ r", 'w': 's3', 'result': False },
 		{ 'phi': "p ∨ r", 'w': 's3', 'result': True },
-		{ 'phi': "[]p ∨ r", 'w': 's2', 'result': True },
+		{ 'phi': "[*]p ∨ r", 'w': 's2', 'result': True },
 		{ 'phi': "<*>q ∨ r", 'w': 's2', 'result': True },
 		{ 'phi': "[ana]p ∨ r", 'w': 's1', 'result': False },
 		{ 'phi': "<ana,bea>¬p", 'w': 's2', 'result': False },
 		{ 'phi': "[bea]¬p", 'w': 's2', 'result': True },
 		{ 'phi': "[bea]¬p", 'w': 's2', 'result': True },
 		{ 'phi': "[ana](¬p) v p", 'w': 's2', 'result': True },
-		{ 'phi': "[ana](¬p v p)", 'w': 's2', 'result': True },
+		{ 'phi': "[ana]((¬p) v p)", 'w': 's2', 'result': True },
 	]
 
 	failed = False
 	for test in tests:
-		result = multiagent_solve( test['phi'], W, R, V, test['w'] )
+		try:
+			result = multiagent_solve( test['phi'], W, R, V, test['w'] )
+		except Exception as e:
+			print( e, test['phi'] )
+			failed = True
 		if result != test['result']: 
 			failed = True
 			print('Test failed: ', test['phi'], 'resulted in', result )

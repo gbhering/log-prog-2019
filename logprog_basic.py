@@ -1,20 +1,9 @@
-from logprog_util import findParens
+from logprog_util import findParens, preparse
 
-def solve(phi, V):
-	alternates = { 
-		'!':'¬', '&':'∧', '|':'v', '->':'→',
-		'NOT':'¬', 'OR':'v', 'AND':'∧', 'IMPLIES': '→' 
-	}
-	for alt, op in alternates.items():
-		phi = phi.replace(alt, op)
-	for operator in ['¬', '∧', 'v', '→', '(', ')']:
-		phi = phi.replace(operator,' '+operator+' ')
-	phi = phi.split()
-	return rec(phi, V)
-
+def solve( phi, V ): return rec( preparse(phi), V )
 
 # order of cases is also order of priority
-def rec(phi, V):
+def rec( phi, V ):
 	# some checks to prevent funny errors
 	if phi in [True, False]:
 		return phi
@@ -32,8 +21,8 @@ def rec(phi, V):
 	if "∧" in phi:
 		i = phi.index('∧')
 		return rec( phi[:i], V ) and rec( phi[i+1:], V )
-	if "v" in phi:
-		i = phi.index('v')
+	if "∨" in phi:
+		i = phi.index('∨')
 		return rec( phi[:i], V ) or rec( phi[i+1:], V )
 	if "→" in phi:
 		i = phi.index('→')

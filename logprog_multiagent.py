@@ -1,19 +1,7 @@
 import re
-from logprog_util import findParens
+from logprog_util import findParens, preparse
 
-def solve( phi, W, R, V, w ):
-	alternates = { 
-		'^':'∧', 'v':'∨',
-		'!':'¬', '&':'∧', '|':'∨', '->':'→',
-		'NOT':'¬', 'OR':'∨', 'AND':'∧', 'IMPLIES':'→',
-	}
-	for alt, op in alternates.items():
-		phi = phi.replace(alt, op)
-	phi = re.sub(r'¬([a-zA-Z]+)', r'(¬\1)', phi)
-	for operator in ['¬', '◇', '□', '∧', '∨', '→', '(', ')', '<', '>', '[', ']', ',']:
-		phi = phi.replace(operator,' '+operator+' ')
-	phi = phi.split()
-	return sat( phi, W, R, V, w )
+def solve( phi, W, R, V, w ): return sat( preparse(phi), W, R, V, w )
 
 def satDiamond( phi, W, R, V, w ):
 	i = phi.index('>')
