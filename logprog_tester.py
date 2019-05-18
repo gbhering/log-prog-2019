@@ -6,12 +6,30 @@ from logprog_announcements import solve as announcements_solve
 def test_announcements():
 	tests = []
 
-	failed = False
-	for test in tests:
-		result = announcements_solve( test['phi'], W, R, V, test['w'] )
-		if result != test['result']: 
-			failed = True
-			print('Test failed: ', test['phi'], 'resulted in', result )
+	V = {
+		'0a' : [ '00', '01' ],
+		'1a' : [ '10', '11' ],
+		'0b' : [ '10', '10' ],
+		'1b' : [ '01', '11' ]
+	}
+	W = [ '00', '01', '10', '11' ]
+	R = {
+		'ana' : { 
+			'00': [ '00', '01' ],  
+			'01': [ '01', '00' ],  
+			'10': [ '10', '11' ],  
+			'11': [ '11', '10' ],  
+		},
+		'bea' : {
+			'00': [ '00', '10' ],  
+			'10': [ '10', '00' ],  
+			'01': [ '01', '11' ],  
+			'11': [ '11', '01' ],  
+		},
+	}
+	w = '11'
+
+	
 
 	if not failed: print('All announcement tests passed!')
 
