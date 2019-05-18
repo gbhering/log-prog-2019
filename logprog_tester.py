@@ -1,53 +1,59 @@
 from logprog_basic import solve as basic_solve
 from logprog_modal import solve as modal_solve
 from logprog_multiagent import solve as multiagent_solve
-from logprog_announcements import announce, make_euclidean
+from logprog_announcements import announce
 
 def e(ag, st, W):
-	if ag == 'ana': return [ w for w in W if st[0] == w[0] ]
-	if ag == 'bea': return [ w for w in W if st[1] == w[1] ]
-	if ag == 'cal': return [ w for w in W if st[2] == w[2] ]
+	idx = ['ana', 'bea', 'cal'].index(ag)
+	return [ w for w in W if st[idx] == w[idx] ]
 
 def test_announcements():
-	V = {
-		'0a' : [ '000', '010', '001', '011' ],
-		'1a' : [ '100', '110', '101', '111' ],
-		'0b' : [ '100', '100', '101', '101' ],
-		'1b' : [ '010', '110', '011', '111' ],
-		'0c' : [ '000', '010', '100', '110' ],
-		'1c' : [ '001', '011', '101', '111' ],
-	}
 	W = [ '000', '010', '100', '110', '001', '011', '101', '111' ]
-	R = {
-		'ana' : { 
-			'000': e('ana','000', W), '010': e('ana','010', W), '100': e('ana','100', W), '110': e('ana','110', W), 
-			'001': e('ana','001', W), '011': e('ana','011', W), '101': e('ana','101', W), '111': e('ana','111', W), 
-		},
-		'bea' : { 
-			'000': e('bea','000', W), '100': e('bea','100', W), '010': e('bea','010', W), '110': e('bea','110', W),
-			'001': e('bea','001', W), '101': e('bea','101', W), '011': e('bea','011', W), '111': e('bea','111', W),
-		},
-		'cal' : { 
-			'000': e('cal','000', W), '100': e('cal','100', W), '010': e('cal','010', W), '110': e('cal','110', W),
-			'001': e('cal','001', W), '101': e('cal','101', W), '011': e('cal','011', W), '111': e('cal','111', W),
-		},
-	}
+	V = { '0a' : [ w for w in W if w[0] == '0' ], '1a' : [ w for w in W if w[0] == '1' ],
+		  '0b' : [ w for w in W if w[1] == '0' ], '1b' : [ w for w in W if w[1] == '1' ],
+		  '0c' : [ w for w in W if w[2] == '0' ], '1c' : [ w for w in W if w[2] == '1' ], }
+	R = { 'ana' : { w : e( 'ana', w, W ) for w in W },
+		  'bea' : { w : e( 'bea', w, W ) for w in W },
+		  'cal' : { w : e( 'cal', w, W ) for w in W }, }
 	w = '111'
 
-	make_euclidean(R)
 	print( 'Announcement test: Do you all want coffee?' ) 
 	
-	answer = "Maybe" if multiagent_solve( '<ana> 1a ^ 1b ^ 1c', W, R, V, w ) else "No"
-	print( 'Ana:', answer )
-	W = announce( '<ana> 1a ^ 1b ^ 1c', W, R, V ) if answer == "Maybe" else announce( '¬<ana> 1a ^ 1b ^ 1c', W, R, V )
-	
-	answer = "Maybe" if multiagent_solve( '<bea> 1a ^ 1b ^ 1c', W, R, V, w ) else "No"
-	print( 'Bea:', answer )
-	W = announce( '<bea> 1a ^ 1b ^ 1c', W, R, V ) if answer == "Maybe" else announce( '¬<bea> 1a ^ 1b ^ 1c', W, R, V )
+	if multiagent_solve( '<ana> 1a ^ 1b ^ 1c', W, R, V, w ):
+		W = announce( '<ana> 1a ^ 1b ^ 1c', W, R, V )
+		if multiagent_solve( '[ana] 1a ^ 1b ^ 1c', W, R, V, w ):
+			W = announce( '[ana] 1a ^ 1b ^ 1c', W, R, V )
+			print( "Ana: Yes" )
+		else:
+			W = announce( '¬[ana] 1a ^ 1b ^ 1c', W, R, V )
+			print( "Ana: Maybe" )
+	else:
+		W = announce( '¬<ana> 1a ^ 1b ^ 1c', W, R, V )
+		print( "Ana: No" )
 
-	answer = "Yes" if multiagent_solve( '[cal] 1a ^ 1b ^ 1c', W, R, V, w ) else "No"
-	print( 'Cal:', answer )
+	if multiagent_solve( '<bea> 1a ^ 1b ^ 1c', W, R, V, w ):
+		W = announce( '<bea> 1a ^ 1b ^ 1c', W, R, V )
+		if multiagent_solve( '[bea] 1a ^ 1b ^ 1c', W, R, V, w ):
+			W = announce( '[bea] 1a ^ 1b ^ 1c', W, R, V )
+			print( "Bea: Yes" )
+		else:
+			W = announce( '¬[bea] 1a ^ 1b ^ 1c', W, R, V )
+			print( "Bea: Maybe" )
+	else:
+		W = announce( '¬<bea> 1a ^ 1b ^ 1c', W, R, V )
+		print( "Bea: No" )
 
+	if multiagent_solve( '<cal> 1a ^ 1b ^ 1c', W, R, V, w ):
+		W = announce( '<cal> 1a ^ 1b ^ 1c', W, R, V )
+		if multiagent_solve( '[cal] 1a ^ 1b ^ 1c', W, R, V, w ):
+			W = announce( '[cal] 1a ^ 1b ^ 1c', W, R, V )
+			print( "Cal: Yes" )
+		else:
+			W = announce( '¬[cal] 1a ^ 1b ^ 1c', W, R, V )
+			print( "Cal: Maybe" )
+	else:
+		W = announce( '¬<cal> 1a ^ 1b ^ 1c', W, R, V )
+		print( "Cal: No" )
 
 
 def test_multiagent():
