@@ -3,26 +3,50 @@ from logprog_modal import solve as modal_solve
 from logprog_multiagent import solve as multiagent_solve
 from logprog_announcements import announce, make_euclidean
 
+def e(ag, st, W):
+	if ag == 'ana': return [ w for w in W if st[0] == w[0] ]
+	if ag == 'bea': return [ w for w in W if st[1] == w[1] ]
+	if ag == 'cal': return [ w for w in W if st[2] == w[2] ]
+
 def test_announcements():
 	V = {
-		'0a' : [ '00', '01' ],
-		'1a' : [ '10', '11' ],
-		'0b' : [ '10', '10' ],
-		'1b' : [ '01', '11' ]
+		'0a' : [ '000', '010', '001', '011' ],
+		'1a' : [ '100', '110', '101', '111' ],
+		'0b' : [ '100', '100', '101', '101' ],
+		'1b' : [ '010', '110', '011', '111' ],
+		'0c' : [ '000', '010', '100', '110' ],
+		'1c' : [ '001', '011', '101', '111' ],
 	}
-	W = [ '00', '01', '10', '11' ]
+	W = [ '000', '010', '100', '110', '001', '011', '101', '111' ]
 	R = {
-		'ana' : { '00': [ '01' ], '01': [ '00' ], '10': [ '11' ], '11': [ '10' ] },
-		'bea' : { '00': [ '10' ], '10': [ '00' ], '01': [ '11' ], '11': [ '01' ] },
+		'ana' : { 
+			'000': e('ana','000', W), '010': e('ana','010', W), '100': e('ana','100', W), '110': e('ana','110', W), 
+			'001': e('ana','001', W), '011': e('ana','011', W), '101': e('ana','101', W), '111': e('ana','111', W), 
+		},
+		'bea' : { 
+			'000': e('bea','000', W), '100': e('bea','100', W), '010': e('bea','010', W), '110': e('bea','110', W),
+			'001': e('bea','001', W), '101': e('bea','101', W), '011': e('bea','011', W), '111': e('bea','111', W),
+		},
+		'cal' : { 
+			'000': e('cal','000', W), '100': e('cal','100', W), '010': e('cal','010', W), '110': e('cal','110', W),
+			'001': e('cal','001', W), '101': e('cal','101', W), '011': e('cal','011', W), '111': e('cal','111', W),
+		},
 	}
-	w = '11'
+	w = '111'
 
 	make_euclidean(R)
-	print( 'Announcement test: Do you both want coffee?' ) 
-	ana_answer = "Maybe" if multiagent_solve( '<ana> 1a ^ 1b', W, R, V, w ) else "No"
-	print( 'Ana:', ana_answer )
-	W = announce( '<ana> 1a ^ 1b', W, R, V ) if ana_answer == "Maybe" else announce( '¬<ana> 1a ^ 1b', W, R, V )
-	print( 'Bea:', "Yes" if multiagent_solve( '[bea] 1a ^ 1b', W, R, V, w ) else "No" )
+	print( 'Announcement test: Do you all want coffee?' ) 
+	
+	answer = "Maybe" if multiagent_solve( '<ana> 1a ^ 1b ^ 1c', W, R, V, w ) else "No"
+	print( 'Ana:', answer )
+	W = announce( '<ana> 1a ^ 1b ^ 1c', W, R, V ) if answer == "Maybe" else announce( '¬<ana> 1a ^ 1b ^ 1c', W, R, V )
+	
+	answer = "Maybe" if multiagent_solve( '<bea> 1a ^ 1b ^ 1c', W, R, V, w ) else "No"
+	print( 'Bea:', answer )
+	W = announce( '<bea> 1a ^ 1b ^ 1c', W, R, V ) if answer == "Maybe" else announce( '¬<bea> 1a ^ 1b ^ 1c', W, R, V )
+
+	answer = "Yes" if multiagent_solve( '[cal] 1a ^ 1b ^ 1c', W, R, V, w ) else "No"
+	print( 'Cal:', answer )
 
 
 
