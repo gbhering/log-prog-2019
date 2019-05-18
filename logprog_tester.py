@@ -1,11 +1,9 @@
 from logprog_basic import solve as basic_solve
 from logprog_modal import solve as modal_solve
 from logprog_multiagent import solve as multiagent_solve
-from logprog_announcements import solve as announcements_solve
+from logprog_announcements import announce, make_euclidean
 
 def test_announcements():
-	tests = []
-
 	V = {
 		'0a' : [ '00', '01' ],
 		'1a' : [ '10', '11' ],
@@ -14,24 +12,17 @@ def test_announcements():
 	}
 	W = [ '00', '01', '10', '11' ]
 	R = {
-		'ana' : { 
-			'00': [ '00', '01' ],  
-			'01': [ '01', '00' ],  
-			'10': [ '10', '11' ],  
-			'11': [ '11', '10' ],  
-		},
-		'bea' : {
-			'00': [ '00', '10' ],  
-			'10': [ '10', '00' ],  
-			'01': [ '01', '11' ],  
-			'11': [ '11', '01' ],  
-		},
+		'ana' : { '00': [ '01' ], '01': [ '00' ], '10': [ '11' ], '11': [ '10' ] },
+		'bea' : { '00': [ '10' ], '10': [ '00' ], '01': [ '11' ], '11': [ '01' ] },
 	}
 	w = '11'
 
-	
-
-	if not failed: print('All announcement tests passed!')
+	make_euclidean(R)
+	print( 'Announcement test: Do you both want coffee?' ) 
+	ana_answer = "Maybe" if multiagent_solve( '<ana> 1a ^ 1b', W, R, V, w ) else "No"
+	print( 'Ana:', ana_answer )
+	W = announce( '<ana> 1a ^ 1b', W, R, V ) if ana_answer == "Maybe" else announce( '¬<ana> 1a ^ 1b', W, R, V )
+	print( 'Bea:', "Yes" if multiagent_solve( '[bea] 1a ^ 1b', W, R, V, w ) else "No" )
 
 
 
