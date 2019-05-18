@@ -3,18 +3,14 @@ from logprog_modal import solve as modal_solve
 from logprog_multiagent import solve as multiagent_solve
 from logprog_announcements import announce
 
-def e(ag, st, W):
-	idx = ['ana', 'bea', 'cal'].index(ag)
-	return [ w for w in W if st[idx] == w[idx] ]
-
 def test_announcements():
 	W = [ '000', '010', '100', '110', '001', '011', '101', '111' ]
 	V = { '0a' : [ w for w in W if w[0] == '0' ], '1a' : [ w for w in W if w[0] == '1' ],
 		  '0b' : [ w for w in W if w[1] == '0' ], '1b' : [ w for w in W if w[1] == '1' ],
 		  '0c' : [ w for w in W if w[2] == '0' ], '1c' : [ w for w in W if w[2] == '1' ], }
-	R = { 'ana' : { w : e( 'ana', w, W ) for w in W },
-		  'bea' : { w : e( 'bea', w, W ) for w in W },
-		  'cal' : { w : e( 'cal', w, W ) for w in W }, }
+	R = { 'ana' : { w :[ _w for _w in W if _w[0] == w[0] ] for w in W },
+		  'bea' : { w :[ _w for _w in W if _w[1] == w[1] ] for w in W },
+		  'cal' : { w :[ _w for _w in W if _w[2] == w[2] ] for w in W }, }
 	w = '111'
 
 	print( 'Announcement test: Do you all want coffee?' ) 
@@ -28,7 +24,6 @@ def test_announcements():
 			W = announce( '¬[ana] 1a ^ 1b ^ 1c', W, R, V )
 			print( "Ana: Maybe" )
 	else:
-		W = announce( '¬<ana> 1a ^ 1b ^ 1c', W, R, V )
 		print( "Ana: No" )
 
 	if multiagent_solve( '<bea> 1a ^ 1b ^ 1c', W, R, V, w ):
@@ -40,7 +35,6 @@ def test_announcements():
 			W = announce( '¬[bea] 1a ^ 1b ^ 1c', W, R, V )
 			print( "Bea: Maybe" )
 	else:
-		W = announce( '¬<bea> 1a ^ 1b ^ 1c', W, R, V )
 		print( "Bea: No" )
 
 	if multiagent_solve( '<cal> 1a ^ 1b ^ 1c', W, R, V, w ):
@@ -52,7 +46,6 @@ def test_announcements():
 			W = announce( '¬[cal] 1a ^ 1b ^ 1c', W, R, V )
 			print( "Cal: Maybe" )
 	else:
-		W = announce( '¬<cal> 1a ^ 1b ^ 1c', W, R, V )
 		print( "Cal: No" )
 
 
