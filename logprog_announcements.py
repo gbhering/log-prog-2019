@@ -1,7 +1,8 @@
 from logprog_multiagent import solve as multiagent_solve
 
 def announce( phi, W, R, V ):
-	return [ _w for _w in W if multiagent_solve( phi, W, R, V, _w ) ]
+	for w in [ _w for _w in W if not multiagent_solve( phi, W, R, V, _w ) ]:
+		W.remove(w)
 
 def make_transitive( R ):
 	pass
