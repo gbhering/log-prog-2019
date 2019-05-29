@@ -3,6 +3,20 @@ from logprog_modal import solve as modal_solve
 from logprog_multiagent import solve as multiagent_solve
 from logprog_announcements import announce
 
+
+def respond_waiter( ag, W, R, V, w ):
+	if multiagent_solve( '<{0}> 1a ^ 1b ^ 1c'.format(ag.lower()), W, R, V, w ):
+		announce( '<{0}> 1a ^ 1b ^ 1c'.format(ag.lower()), W, R, V )
+		if multiagent_solve( '[{0}] 1a ^ 1b ^ 1c'.format(ag.lower()), W, R, V, w ):
+			announce( '[{0}] 1a ^ 1b ^ 1c'.format(ag.lower()), W, R, V )
+			print( "{0}: Yes, please.".format(ag) )
+		else:
+			announce( '¬[{0}] 1a ^ 1b ^ 1c'.format(ag.lower()), W, R, V )
+			print( "{0}: Maybe...".format(ag) )
+	else:
+		print( "{0}: No, thank you.".format(ag) )
+
+
 def test_announcements():
 	W = [ '000', '010', '100', '110', '001', '011', '101', '111' ]
 	V = { '0a' : [ w for w in W if w[0] == '0' ], '1a' : [ w for w in W if w[0] == '1' ],
@@ -14,39 +28,9 @@ def test_announcements():
 	w = '111'
 
 	print( 'Announcement test: Do you all want coffee?' ) 
-	
-	if multiagent_solve( '<ana> 1a ^ 1b ^ 1c', W, R, V, w ):
-		W = announce( '<ana> 1a ^ 1b ^ 1c', W, R, V )
-		if multiagent_solve( '[ana] 1a ^ 1b ^ 1c', W, R, V, w ):
-			W = announce( '[ana] 1a ^ 1b ^ 1c', W, R, V )
-			print( "Ana: Yes" )
-		else:
-			W = announce( '¬[ana] 1a ^ 1b ^ 1c', W, R, V )
-			print( "Ana: Maybe" )
-	else:
-		print( "Ana: No" )
-
-	if multiagent_solve( '<bea> 1a ^ 1b ^ 1c', W, R, V, w ):
-		W = announce( '<bea> 1a ^ 1b ^ 1c', W, R, V )
-		if multiagent_solve( '[bea] 1a ^ 1b ^ 1c', W, R, V, w ):
-			W = announce( '[bea] 1a ^ 1b ^ 1c', W, R, V )
-			print( "Bea: Yes" )
-		else:
-			W = announce( '¬[bea] 1a ^ 1b ^ 1c', W, R, V )
-			print( "Bea: Maybe" )
-	else:
-		print( "Bea: No" )
-
-	if multiagent_solve( '<cal> 1a ^ 1b ^ 1c', W, R, V, w ):
-		W = announce( '<cal> 1a ^ 1b ^ 1c', W, R, V )
-		if multiagent_solve( '[cal] 1a ^ 1b ^ 1c', W, R, V, w ):
-			W = announce( '[cal] 1a ^ 1b ^ 1c', W, R, V )
-			print( "Cal: Yes" )
-		else:
-			W = announce( '¬[cal] 1a ^ 1b ^ 1c', W, R, V )
-			print( "Cal: Maybe" )
-	else:
-		print( "Cal: No" )
+	respond_waiter( 'Ana', W, R, V, w )
+	respond_waiter( 'Bea', W, R, V, w )
+	respond_waiter( 'Cal', W, R, V, w )
 
 
 def test_multiagent():
