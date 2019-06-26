@@ -34,6 +34,7 @@ In this implementation the state model is represented by:
 - a list of states `W`; 
 - a dictionary associating each state to a list of other states they are connected to `R` and 
 - A dictionary associating literals to lists of states where they are true `V`
+
 So the verifying function is `solve( phi: str, W: list, R: dict, V: dict, w: str ) -> bool`, where `phi` is the formula and `w` the state where it is evaluated. 
 
 #### Example
