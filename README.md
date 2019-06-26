@@ -101,19 +101,39 @@ R = { 	'ana' : { 'both_want_coffee'      : [ 'both_want_coffee', 'only_ana_wants
 w = 'both_want_coffee'
 ```
 
-We could then ask
+We could then ask:
 
 ```python
 # Does Ana believe both herself and Bea want coffee?
 solve( "<ana> ana_wants_coffee AND bea_wants_coffee", W, R, V, w ) # True, she believes it is possible
 # Does Bea know Bea wants coffee?
 solve( "[bea] bea_wants_coffee", W, R, V, w ) # True, as a matter of fact, she does
+# Does both of them know they both want coffee? 
+# The two following lines are identical, since Ana and Bea are all the agents
+solve( "[ana,bea] ana_wants_coffee AND bea_wants_coffee", W, R, V, w ) # False
+solve( "[*] ana_wants_coffee AND bea_wants_coffee", W, R, V, w ) # False
 ```
 
 #### Unary operators 
 [ `NOT` | `!` | `¬` ], `<*>`,`<agent1,agent2,agent3,...>`, `[*]`, and `[agent1,agent2,agent3,...]`
 #### Binary operators 
 [ `AND` | `&` | `∧` ], [ `OR` | `|` | `∨` ], and [ `IMPLIES` | `->` | `→` ]
+
+
+### logprog_announcements
+This an extension component for multiple agent modal logic. It allows for public announcements to be made, which are simply formulas that are valid in all states or worlds. Its function `announce( phi: str, W: list, R: dict, V: dict )` updates the `W` the list of worlds accordingly.
+
+#### Example
+Building upon the prior example:
+
+```python
+# Does Ana of them know they both want coffee? 
+solve( "[ana] ana_wants_coffee AND bea_wants_coffee", W, R, V, w ) # False, she doesn't
+# Bea announces she knows she wants coffee
+announce( "[bea] bea_wants_coffee", W, R, V )
+# The worlds where Bea knows she does not want coffee are pruned, should we ask Ana again...
+solve( "[ana] ana_wants_coffee AND bea_wants_coffee", W, R, V, w ) # True, now she does
+```
 
 
 ## Useful links
