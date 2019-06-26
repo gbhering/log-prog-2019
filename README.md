@@ -1,8 +1,15 @@
-## basic_implementation.py
+## log-prog-2019
+This is a series of python scripts that implement a few logic formula verifiers. At the moment, these are: [simple propositional logic](#logprog_basic.py), [modal logic](#logprog_modal.py), and [multi-agent modal logic](#logprog_multiagent.py) (which has a [public announcement extension](#logprog_announcements.py)).
+
+#### General Guidelines
 Run with python3! It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
 
-### Basic usage
-Just use the function `solve(phi, V)`. The output will be `bool`. 
+Every implementation has a `solve()` method that takes one string containing one formula (and the required models, when necessary) and returns a boolean. Each implementation has it set of operators, naturally with frequent overlaps. [logprog_tester.py](logprog_tester.py) has a few tests of each implementation, so do feel free to refer to it for examples. Below, short descriptions of each logic system, its operators and how to represent its models. 
+
+A few different tokens are used for each operators, you can use them interchangeably and mix and match.
+
+### logprog_basic.py 
+Basic propositional logic. If you're a programmer, you're rather familiar with it.
 
 #### Format
 Provide a the formula as a `str` making sure no variable names will coincide with operator names. Ensure parens are be balanced, and not empty.
@@ -22,13 +29,9 @@ solve("(A->B)->(C->D)",V) # True
 ### Operators
 Listed in priority order. The parens `(` and `)` can be used to specify order of resolution.
 #### Unary operators 
-`NOT` or `!` or `¬`
+[`NOT`|`!`|`¬`]
 #### Binary operators 
-`AND`, `OR` and `IMPLIES` or
-
-`&`, `|` and `->` or
-
-`∧`, `∨` and `→`
+[`AND`|`&`|`∧`], [`OR`|`|`|`∨`], and [`IMPLIES`|`->`|`→`]
 
 ## modal_implementation.py
 Run with python3! It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
