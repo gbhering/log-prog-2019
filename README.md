@@ -69,6 +69,53 @@ solve( "NECESSARILY NOT r", W, R, V, "s4" ) # False
 #### Binary operators 
 [ `AND` | `&` | `∧` ], [ `OR` | `|` | `∨` ], and [ `IMPLIES` | `->` | `→` ]
 
+### logprog_multiagent
+This system is an extension of modal logic. In this, again, we take a formula and verify it on a model, but this time there are multiple agents. Each is represented in the graph by different sets of edges, as each sees different relationships between states.
+
+The verifying function takes the same form as in modal logic: `solve( phi: str, W: list, R: dict, V: dict, w: str ) -> bool`, but the dictionaries that contain the edges are nested into another dictionary with each agent as key. 
+
+One possible interpretation of the model is:
+- `phi` the question being asked,
+- `W` lists the possible worlds, 
+- `V` maps which variables are true in each world, 
+- `R` contains, for each agent, edges between worlds they cannot distinguish with the variables they know, and
+- `w` the real world.
+
+#### Example
+Suppose you have two friends going out to have a coffee shop: Ana and Bea. In spite of their choice of venue, they do not know the other's choice of drink. We know that indeed yes, they both want coffee, but we might model the situation as such:
+
+```python
+W = [ 'both_want_coffee', 'only_ana_wants_coffee', 'only_bea_wants_coffee', 'neither_want_coffee' ]
+V = { 	'ana_wants_coffee' : [ 'both_want_coffee', 'only_ana_wants_coffee' ], 
+		'ana_wants_tea'    : [ 'neither_want_coffee', 'only_bea_wants_coffee' ], 
+		'bea_wants_coffee' : [ 'both_want_coffee', 'only_bea_wants_coffee' ], 
+		'bea_wants_tea'    : [ 'neither_want_coffee', 'only_ana_wants_coffee' ]}
+R = { 	'ana' : { 'both_want_coffee'      : [ 'both_want_coffee', 'only_ana_wants_coffee' ], 
+				  'neither_want_coffee'   : [ 'neither_want_coffee', 'only_bea_wants_coffee' ],
+				  'only_ana_wants_coffee' : [ 'only_ana_wants_coffee', 'both_want_coffee' ],
+				  'only_bea_wants_coffee' : [ 'only_bea_wants_coffee', 'neither_want_coffee' ] },
+		'bea' : { 'both_want_coffee'      : [ 'both_want_coffee', 'only_bea_wants_coffee' ], 
+				  'neither_want_coffee'   : [ 'neither_want_coffee', 'only_ana_wants_coffee' ],
+				  'only_ana_wants_coffee' : [ 'only_ana_wants_coffee', 'neither_want_coffee' ],
+				  'only_bea_wants_coffee' : [ 'only_bea_wants_coffee', 'both_want_coffee' ] }}
+w = 'both_want_coffee'
+```
+
+We could then ask
+
+```python
+# Does Ana believe both herself and Bea want coffee?
+solve( "<ana> ana_wants_coffee AND bea_wants_coffee", W, R, V, w ) # True, she believes it is possible
+# Does Bea know Bea wants coffee?
+solve( "[bea] bea_wants_coffee", W, R, V, w ) # True, as a matter of fact, she does
+```
+
+#### Unary operators 
+[ `NOT` | `!` | `¬` ], `<*>`,`<agent1,agent2,agent3,...>`, `[*]`, and `[agent1,agent2,agent3,...]`
+#### Binary operators 
+[ `AND` | `&` | `∧` ], [ `OR` | `|` | `∨` ], and [ `IMPLIES` | `->` | `→` ]
+
+
 ## Useful links
 [List of logic symbols](https://en.wikipedia.org/wiki/List_of_logic_symbols) on Wikipedia
 
