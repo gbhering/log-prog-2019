@@ -1,19 +1,15 @@
 ## log-prog-2019
-This is a series of python scripts that implement a few logic formula verifiers. At the moment, these are: [simple propositional logic](#logprog_basic.py), [modal logic](#logprog_modal.py), and [multi-agent modal logic](#logprog_multiagent.py) (which has a [public announcement extension](#logprog_announcements.py)).
+This is a series of python scripts that implement a few logic formula verifiers. At the moment, these are: [simple propositional logic](#logprog_basic), [modal logic](#logprog_modal), and [multi-agent modal logic](#logprog_multiagent) (which has a [public announcement extension](#logprog_announcements)).
 
 #### General Guidelines
-Run with python3! It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
+Run with python3! It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect. Make sure parenthesis are balanced and not empty, and there is no overlap between variable names and operator tokens. There's no sanity checking on the models whatsoever.
 
-Every implementation has a `solve()` method that takes one string containing one formula (and the required models, when necessary) and returns a boolean. Each implementation has it set of operators, naturally with frequent overlaps. [logprog_tester.py](logprog_tester.py) has a few tests of each implementation, so do feel free to refer to it for examples. Below, short descriptions of each logic system, its operators and how to represent its models. 
+Each implementation has a `solve()` method, that takes the formula (`phi`) for verification and data structures that represent the related models. Find below short descriptions, operator lists and examples (refer to [logprog_tester.py](logprog_tester.py) for more).
 
 A few different tokens are used for each operators, you can use them interchangeably and mix and match.
 
-### logprog_basic.py 
-Basic propositional logic. If you're a programmer, you're rather familiar with it.
-
-#### Format
-Provide a the formula as a `str` making sure no variable names will coincide with operator names. Ensure parens are be balanced, and not empty.
-To evaluate the formula, the algorithm needs a `dict` with `bool` values for each literal.
+### logprog_basic
+Basic propositional logic, exposed here mostly for educational purposes. `solve( phi: str, V: dict ) -> bool` takes a dictionary of literals and uses it to verify the formula.
 
 #### Example
 ```python
@@ -26,16 +22,12 @@ solve("(A OR B) AND (C OR D)",V) # True
 solve("(A->B)->(C->D)",V) # True
 ```
 
-### Operators
-Listed in priority order. The parens `(` and `)` can be used to specify order of resolution.
 #### Unary operators 
 [`NOT`|`!`|`¬`]
 #### Binary operators 
 [`AND`|`&`|`∧`], [`OR`|`|`|`∨`], and [`IMPLIES`|`->`|`→`]
 
-## modal_implementation.py
-Run with python3! It is in your hands to make sure your formulae are well formed. The program has basic error handling, but it still has ways to go until it is perfect.
-There's no sanity checking on the model whatsoever.
+## modal_implementation
 
 ### Basic usage
 Just use the function `solve( phi, W, R, V, w )`. The output will be `bool`. 
