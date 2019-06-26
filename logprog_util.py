@@ -22,3 +22,16 @@ def preparse( phi ):
 		phi = phi.replace(operator,' '+operator+' ')
 	phi = phi.split()
 	return phi
+
+
+def make_transitive( R ):
+	pass
+
+def make_reflexive( R ):
+	for agent, states in R.items():
+		for state, edges in states.items():
+			edges.append(state)
+
+def make_euclidean( R ):
+	make_transitive(R)
+	make_reflexive(R)
