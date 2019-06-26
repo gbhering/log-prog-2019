@@ -28,7 +28,7 @@ solve("(A->B)->(C->D)",V) # True
 [ `AND` | `&` | `∧` ], [ `OR` | `|` | `∨` ], and [ `IMPLIES` | `->` | `→` ]
 
 ## modal_implementation
-Modal logic uses state model. Verification of forumulae happen in specific states. 
+Modal logic uses state models. Verification of forumulae happens in specific states. There are operators that verify whether all or any neighboring states evaluate the formula that follows as true. As this model often represents a belief system, those operators are here called 'necessarily' and 'possibly' respectively.
 
 In this implementation the state model is represented by: 
 - a list of states `W`; 
