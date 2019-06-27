@@ -86,18 +86,22 @@ Suppose you have two friends going out to have a coffee shop: Ana and Bea. In sp
 
 ```python
 W = [ 'both_want_coffee', 'only_ana_wants_coffee', 'only_bea_wants_coffee', 'neither_want_coffee' ]
-V = { 	'ana_wants_coffee' : [ 'both_want_coffee', 'only_ana_wants_coffee' ], 
-		'ana_wants_tea'    : [ 'neither_want_coffee', 'only_bea_wants_coffee' ], 
-		'bea_wants_coffee' : [ 'both_want_coffee', 'only_bea_wants_coffee' ], 
-		'bea_wants_tea'    : [ 'neither_want_coffee', 'only_ana_wants_coffee' ]}
-R = { 	'ana' : { 'both_want_coffee'      : [ 'both_want_coffee', 'only_ana_wants_coffee' ], 
-				  'neither_want_coffee'   : [ 'neither_want_coffee', 'only_bea_wants_coffee' ],
-				  'only_ana_wants_coffee' : [ 'only_ana_wants_coffee', 'both_want_coffee' ],
-				  'only_bea_wants_coffee' : [ 'only_bea_wants_coffee', 'neither_want_coffee' ] },
-		'bea' : { 'both_want_coffee'      : [ 'both_want_coffee', 'only_bea_wants_coffee' ], 
-				  'neither_want_coffee'   : [ 'neither_want_coffee', 'only_ana_wants_coffee' ],
-				  'only_ana_wants_coffee' : [ 'only_ana_wants_coffee', 'neither_want_coffee' ],
-				  'only_bea_wants_coffee' : [ 'only_bea_wants_coffee', 'both_want_coffee' ] }}
+V = { 	
+	'ana_wants_coffee' : [ 'both_want_coffee', 'only_ana_wants_coffee' ], 
+	'ana_wants_tea'    : [ 'neither_want_coffee', 'only_bea_wants_coffee' ], 
+	'bea_wants_coffee' : [ 'both_want_coffee', 'only_bea_wants_coffee' ], 
+	'bea_wants_tea'    : [ 'neither_want_coffee', 'only_ana_wants_coffee' ]
+    }
+R = { 	
+	'ana' : { 'both_want_coffee'      : [ 'both_want_coffee', 'only_ana_wants_coffee' ], 
+		  'neither_want_coffee'   : [ 'neither_want_coffee', 'only_bea_wants_coffee' ],
+		  'only_ana_wants_coffee' : [ 'only_ana_wants_coffee', 'both_want_coffee' ],
+		  'only_bea_wants_coffee' : [ 'only_bea_wants_coffee', 'neither_want_coffee' ] },
+	'bea' : { 'both_want_coffee'      : [ 'both_want_coffee', 'only_bea_wants_coffee' ], 
+		  'neither_want_coffee'   : [ 'neither_want_coffee', 'only_ana_wants_coffee' ],
+		  'only_ana_wants_coffee' : [ 'only_ana_wants_coffee', 'neither_want_coffee' ],
+		  'only_bea_wants_coffee' : [ 'only_bea_wants_coffee', 'both_want_coffee' ] }
+     }
 w = 'both_want_coffee'
 ```
 
