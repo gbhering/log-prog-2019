@@ -1,12 +1,12 @@
 from collections import defaultdict, deque
+from logprog_scc import find_sccs
 
 class Kripke:
 	""" K = < S(tates), R(elationships), L(abels) > """
-	def __init__(self, S=[], R=[], L={}):
+	def __init__(self, S=set(), R=set(), L=dict()):
 		self.S = set(S)
 		self.R = set(R)
-		self.L = defaultdict(set).update(L)
-		self.SCC = defaultdict(set)
+		self.L = defaultdict(set, L)
 
 	def checkNOT(phi):
 		phi = ' '.join(phi)
@@ -35,36 +35,10 @@ class Kripke:
 					self.L[t].add( phi1+' EU '+phi2 )
 					T.append(t)
 
-	def _visit(u, unvisited, L):
-		if u in unvisited:
-			unvisited.pop(unvisited.index(u))
-			for v in [ v for v in self.S if (u,v) in self.R ]:
-				_visit(v, unvisited, L)
-			L.appendleft(u)
-
-	def _assign(u, root, SCCs):
-		if u not in SCCs:
-			SCCs.update({u, root})
-			for v in [ v for v in self.S if (u,v) in self.R ]:
-				self._assign(v,root)
-
-	def find_sccs(vertices=self.S):
-		""" Kosaraju's algorithm """
-		SCCs = dict()
-		unvisited = list(self.S)
-		L = deque()
-		for u in unvisited: self._visit(u, unvisited, L)
-		for u in L: self._assign(u,u,SCCs)
-		for root in set(SCCs.values()):
-			component = { v for v in SCCs.keys() if SCCs[v] == root }
-			yield component
-			SCCs = { v for v in SCCs if v not in component }
-
-
 	def checkEG(phi):
 		phi = ' '.join(phi)
 		Sphi = { s for s in self.S if phi in self.L[s] }
-		SCC = [ C for C in self.find_sccs if len(C) > 1 and not Sphi.isdisjoint(C) ]
+		SCC = [ C for C in self.find_sccs(self.S, self.R) if len(C) > 1 and not Sphi.isdisjoint(C) ]
 		T = [s for component in SCC for s in component]
 		for s in T: self.L[s].add('EG '+phi)
 		while len(T) > 0:
