@@ -144,3 +144,5 @@ solve( "[ana] ana_wants_coffee AND bea_wants_coffee", W, R, V, w ) # True, now s
 [List of logic symbols](https://en.wikipedia.org/wiki/List_of_logic_symbols) on Wikipedia
 
 [Modal Logic Playground](https://rkirsling.github.io/modallogic/) by Ross Kirsling ~~who stole the idea of doing it long before I had it~~
+
+[TuLiP](https://github.com/tulip-control/tulip-control) a toolbox of ODBB model manipulation
